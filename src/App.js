@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import UnderNavBar from "./components/underNavBar";
 import axios from "axios";
+import UnderNavBar from "./components/underNavBar";
+import DisplayTable from "./components/displayTable";
 
 function App() {
   const [getApiInfo, setApiInfo] = useState([]);
@@ -20,9 +21,7 @@ function App() {
   return (
     <div>
       <UnderNavBar />
-      {getApiInfo.map((coin) => (
-        <div> {coin.id}</div>
-      ))}
+      <DisplayTable />
     </div>
   );
 }
