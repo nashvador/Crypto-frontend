@@ -8,6 +8,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 const DisplayTable = () => {
   const [getApiInfo, setApiInfo] = useState([]);
@@ -73,6 +75,11 @@ const DisplayTable = () => {
                         : { color: "green" }
                     }
                   >
+                    {row.twentyFourHourChange.toString().includes("-") ? (
+                      <ArrowDropDownIcon fontSize="small" color="red" />
+                    ) : (
+                      <ArrowDropUpIcon fontSize="small" color="green" />
+                    )}{" "}
                     {row.twentyFourHourChange}
                   </TableCell>
                 </TableRow>
