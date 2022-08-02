@@ -1,7 +1,13 @@
 import { useState, useEffect, React } from "react";
 // import "antd/dist/antd.css";
 import axios from "axios";
-import { Table } from "antd";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 const DisplayTable = () => {
   const [getApiInfo, setApiInfo] = useState([]);
@@ -16,39 +22,65 @@ const DisplayTable = () => {
     getApiCall();
   }, []);
 
-  const columns = [
-    {
-      title: "#",
-      dataIndex: "market_cap_rank",
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-    },
-    {
-      title: "Price",
-      dataIndex: "current_price",
-      sorter: {
-        compare: (a, b) => a.current_price - b.current_price,
-        multiple: 2,
-      },
-    },
-    {
-      title: "24h change",
-      dataIndex: "price_change_percentage_24h",
-      sorter: {
-        compare: (a, b) =>
-          a.price_change_percentage_24h - b.price_change_percentage_24h,
-        multiple: 1,
-      },
-    },
-  ];
+  function createData(
+    marketCapRank,
+    coinName,
+    currentPrice,
+    twentyFourHourChange
+  ) {
+    return { marketCapRank, coinName, currentPrice, twentyFourHourChange };
+  }
 
+  const rows = getApiInfo.map((cryptoCoinInformation) =>
+    createData(
+      cryptoCoinInformation.market_cap_rank,
+      cryptoCoinInformation.name,
+      cryptoCoinInformation.current_price,
+      cryptoCoinInformation.price_change_percentage_24h
+    )
+  );
+
+  console.log(rows);
   console.log(getApiInfo);
 
   return (
-    <div style={{ padding: "5rem" }}>
-      <Table columns={columns} dataSource={getApiInfo} />
+    <div>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Rank</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Current Price</TableCell>
+              <TableCell>Change in 24 hours</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => {
+              console.log(row.twentyFourHourChange);
+              return (
+                <TableRow
+                  key={row.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell>{row.marketCapRank}</TableCell>
+                  <TableCell>{row.coinName}</TableCell>
+                  <TableCell>{row.currentPrice}</TableCell>
+                  <TableCell
+                    style={
+                      row.twentyFourHourChange.toString().includes("-")
+                        ? { color: "red" }
+                        : { color: "green" }
+                    }
+                  >
+                    {row.twentyFourHourChange}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };
