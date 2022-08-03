@@ -13,14 +13,14 @@ const UnderNavBar = () => {
     getNavBarData();
   }, []);
 
-  console.log(getGlobalInfo);
-
   const totalMarketValue = Object.values(getGlobalInfo.total_market_cap).reduce(
     (accumulator, value) => {
       return accumulator + value;
     },
     0
   );
+
+  console.log(getGlobalInfo);
 
   return (
     <div>

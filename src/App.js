@@ -16,8 +16,6 @@ function App() {
     getApiCall();
   }, []);
 
-  console.log(getApiInfo);
-
   return (
     <div>
       <UnderNavBar />

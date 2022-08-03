@@ -1,5 +1,5 @@
 import { useState, useEffect, React } from "react";
-// import "antd/dist/antd.css";
+import ChartForTable from "./chartForTable";
 import axios from "axios";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -16,7 +16,7 @@ const DisplayTable = () => {
 
   const getApiCall = async () => {
     const response = await axios.get(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=25&page=1&sparkline=false"
+      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d"
     );
     setApiInfo(response.data);
   };
@@ -28,9 +28,16 @@ const DisplayTable = () => {
     marketCapRank,
     coinName,
     currentPrice,
-    twentyFourHourChange
+    twentyFourHourChange,
+    sevenDayChange
   ) {
-    return { marketCapRank, coinName, currentPrice, twentyFourHourChange };
+    return {
+      marketCapRank,
+      coinName,
+      currentPrice,
+      twentyFourHourChange,
+      sevenDayChange,
+    };
   }
 
   const rows = getApiInfo.map((cryptoCoinInformation) =>
@@ -38,12 +45,12 @@ const DisplayTable = () => {
       cryptoCoinInformation.market_cap_rank,
       cryptoCoinInformation.name,
       cryptoCoinInformation.current_price,
-      cryptoCoinInformation.price_change_percentage_24h
+      cryptoCoinInformation.price_change_percentage_24h,
+      cryptoCoinInformation.sparkline_in_7d
     )
   );
 
-  console.log(rows);
-  console.log(getApiInfo);
+  // console.log(getApiInfo[0].sparkline_in_7d.price);
 
   return (
     <div>
@@ -55,11 +62,11 @@ const DisplayTable = () => {
               <TableCell>Name</TableCell>
               <TableCell>Current Price</TableCell>
               <TableCell>Change in 24 hours</TableCell>
+              <TableCell>Change in 7 days</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row) => {
-              console.log(row.twentyFourHourChange);
               return (
                 <TableRow
                   key={row.name}
@@ -81,6 +88,9 @@ const DisplayTable = () => {
                       <ArrowDropUpIcon fontSize="small" color="green" />
                     )}{" "}
                     {row.twentyFourHourChange}
+                  </TableCell>
+                  <TableCell>
+                    <ChartForTable price={row.sevenDayChange.price} />
                   </TableCell>
                 </TableRow>
               );
