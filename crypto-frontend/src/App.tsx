@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import getAPI from "../src/services/api/utilities/provideApiCall";
+import logger from "./services/api/utilities/logger";
+import CryptoTable from "./components/Table/CryptoTable";
 
 function App() {
   const [getTestGlobalApi, setTestGlobalApi] = useState<object>({});
@@ -8,8 +9,12 @@ function App() {
   useEffect(() => {
     getAPI.getAll("global").then((response) => setTestGlobalApi(response));
   }, []);
-  console.log(getTestGlobalApi);
-  return <div></div>;
+  logger.info(getTestGlobalApi);
+  return (
+    <div>
+      <CryptoTable />
+    </div>
+  );
 }
 
 export default App;

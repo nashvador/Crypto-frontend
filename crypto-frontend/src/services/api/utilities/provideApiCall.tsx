@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { handleError, handleResponse } from "./responseApiCall";
+import { handleError, handleResponse } from "./responses";
 
 const baseURL = "https://api.coingecko.com/api/v3/";
 
