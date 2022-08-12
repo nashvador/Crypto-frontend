@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { handleError, handleResponse } from "./responses";
+import logger from "./logger";
+import { ErrorOutlineRounded } from "@mui/icons-material";
 
 const baseURL = "https://api.coingecko.com/api/v3/";
 
@@ -10,11 +12,25 @@ const getAll = async (
   try {
     const response = await axios.get(baseURL + additionalURL);
     const responseData = handleResponse(response);
-    console.log(responseData);
+    logger.info(responseData);
     return responseData;
   } catch (error) {
     handleError(error);
   }
 };
 
-export default { getAll };
+const getMarketData = async (
+  marketDataURL: string
+): Promise<object | Array<object> | any> => {
+  try {
+    const response = await axios.get(
+      baseURL + "coins/markets/" + marketDataURL
+    );
+    const responseData = handleError(response);
+    return responseData;
+  } catch (error) {
+    handleError(ErrorOutlineRounded);
+  }
+};
+
+export default { getAll, getMarketData };

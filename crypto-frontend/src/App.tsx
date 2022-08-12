@@ -9,7 +9,6 @@ function App() {
   useEffect(() => {
     getAPI.getAll("global").then((response) => setTestGlobalApi(response));
   }, []);
-  logger.info(getTestGlobalApi);
   return (
     <div>
       <CryptoTable />
