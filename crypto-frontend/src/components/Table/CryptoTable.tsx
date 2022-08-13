@@ -10,7 +10,9 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Create } from "@mui/icons-material";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 
 interface chartApiData {
   market_cap_rank: number;
@@ -87,6 +89,34 @@ const CryptoTable = () => {
     )
   );
 
+  const styleColor = (chartProp: number): object => {
+    if (chartProp.toString().includes("-")) {
+      return { color: "red" };
+    } else {
+      return { color: "green" };
+    }
+  };
+
+  const styleArrow = (chartProp: number): ReactJSXElement => {
+    if (chartProp.toString().includes("-")) {
+      return (
+        <div>
+          <ArrowDropDownIcon fontSize="small" htmlColor="red" />
+          {chartProp.toFixed(2)}
+          {"%"}
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <ArrowDropUpIcon fontSize="small" htmlColor="green" />
+          {chartProp.toFixed(2)}
+          {"%"}
+        </div>
+      );
+    }
+  };
+
   return (
     <div>
       <TableContainer>
@@ -111,10 +141,7 @@ const CryptoTable = () => {
           </TableHead>
           <TableBody>
             {rows.map((row, id) => (
-              <TableRow
-                key={id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
+              <TableRow key={id}>
                 <TableCell component="th" scope="row">
                   {row.marketCapRank}
                 </TableCell>
@@ -126,9 +153,24 @@ const CryptoTable = () => {
                   {")"}
                 </TableCell>
                 <TableCell align="right">{row.price}</TableCell>
-                <TableCell align="right">{row.priceChangeOneHour}</TableCell>
-                <TableCell align="right">{row.priceChangeOneDay}</TableCell>
-                <TableCell align="right">{row.priceChangeOneWeek}</TableCell>
+                <TableCell
+                  align="right"
+                  style={styleColor(row.priceChangeOneHour)}
+                >
+                  {styleArrow(row.priceChangeOneHour)}
+                </TableCell>
+                <TableCell
+                  align="right"
+                  style={styleColor(row.priceChangeOneDay)}
+                >
+                  {styleArrow(row.priceChangeOneDay)}
+                </TableCell>
+                <TableCell
+                  align="right"
+                  style={styleColor(row.priceChangeOneWeek)}
+                >
+                  {styleArrow(row.priceChangeOneWeek)}
+                </TableCell>
                 <TableCell align="right">{row.dayVolume}</TableCell>
                 <TableCell align="right">{row.MarketCap}</TableCell>
                 <TableCell align="right">
