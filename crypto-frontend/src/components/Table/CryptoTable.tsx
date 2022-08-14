@@ -13,8 +13,6 @@ import TableRow from "@mui/material/TableRow";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
-import TableSortLabel from "@mui/material/TableSortLabel";
-import { visuallyHidden } from "@mui/utils";
 
 interface chartApiData {
   market_cap_rank: number;
@@ -27,60 +25,7 @@ interface chartApiData {
   price_change_percentage_7d_in_currency: number;
   total_volume: number;
   market_cap: number;
-  sparkline_in_7d: Array<number>;
-}
-
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-type Order = "asc" | "desc";
-
-function getComparator<Key extends keyof any>(
-  order: Order,
-  orderBy: Key
-): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string }
-) => number {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
-  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
-
-interface EnhancedTableProps {
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    property: keyof chartApiData
-  ) => void;
-  order: Order;
-  orderBy: string;
-}
-
-function EnhancedTableHead(props: EnhancedTableProps) {
-  const { order, orderBy, onRequestSort } = props;
-  const createSortHandler =
-    (property: keyof chartApiData) => (event: React.MouseEvent<unknown>) => {
-      onRequestSort(event, property);
-    };
+  sparkline_in_7d?: object;
 }
 
 // more documentation
@@ -91,18 +36,6 @@ const CryptoTable = () => {
     Array<chartApiData | any>
   >([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] =
-    React.useState<keyof chartApiData>("current_price");
-
-  const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: keyof chartApiData
-  ) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
 
   const chartDataBaseURL =
     "?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d";
@@ -115,30 +48,30 @@ const CryptoTable = () => {
   }, []);
 
   function createData(
-    market_cap_rank: number,
-    image: string,
-    name: string,
-    symbol: string,
-    current_price: number,
-    price_change_percentage_1h_in_currency: number,
-    price_change_percentage_24h_in_currency: number,
-    price_change_percentage_7d_in_currency: number,
-    total_volume: number,
-    market_cap: number,
-    sparkline_in_7d: Array<number>
-  ): chartApiData {
+    marketCapRank: number,
+    coinImage: string,
+    coinName: string,
+    coinSymbol: string,
+    price: number,
+    priceChangeOneHour: number,
+    priceChangeOneDay: number,
+    priceChangeOneWeek: number,
+    dayVolume: number,
+    MarketCap: number,
+    sevenDayGraph: Array<number>
+  ) {
     return {
-      market_cap_rank,
-      image,
-      name,
-      symbol,
-      current_price,
-      price_change_percentage_1h_in_currency,
-      price_change_percentage_24h_in_currency,
-      price_change_percentage_7d_in_currency,
-      total_volume,
-      market_cap,
-      sparkline_in_7d,
+      marketCapRank,
+      coinImage,
+      coinName,
+      coinSymbol,
+      price,
+      priceChangeOneHour,
+      priceChangeOneDay,
+      priceChangeOneWeek,
+      dayVolume,
+      MarketCap,
+      sevenDayGraph,
     };
   }
 
@@ -186,55 +119,6 @@ const CryptoTable = () => {
     }
   };
 
-  interface HeadCell {
-    id: keyof chartApiData;
-    label: string;
-    numeric: boolean;
-  }
-
-  const headCells: readonly HeadCell[] = [
-    {
-      id: "market_cap_rank",
-      numeric: true,
-      label: "Market Cap Rank",
-    },
-    {
-      id: "name",
-      numeric: false,
-      label: "Coin",
-    },
-    {
-      id: "current_price",
-      numeric: true,
-      label: "Price",
-    },
-    {
-      id: "price_change_percentage_1h_in_currency",
-      numeric: true,
-      label: "Price Change in 1 Hour",
-    },
-    {
-      id: "price_change_percentage_24h_in_currency",
-      numeric: true,
-      label: "Price Change in 1 Day",
-    },
-    {
-      id: "price_change_percentage_7d_in_currency",
-      numeric: true,
-      label: "Price Change in 1 Week",
-    },
-    {
-      id: "market_cap",
-      numeric: true,
-      label: "Market Cap",
-    },
-    {
-      id: "total_volume",
-      numeric: true,
-      label: "Total volume",
-    },
-  ];
-
   return (
     <div>
       <TableContainer>
@@ -246,78 +130,53 @@ const CryptoTable = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              {headCells.map((headCell) => (
-                <TableCell
-                  key={headCell.id}
-                  sortDirection={orderBy === headCell.id ? order : false}
-                >
-                  <TableSortLabel
-                    active={orderBy === headCell.id}
-                    direction={orderBy === headCell.id ? order : "asc"}
-                    onClick={createSortHandler(headCell.id)}
-                  >
-                    {headCell.label}
-                    {orderBy === headCell.id ? (
-                      <Box component="span" sx={visuallyHidden}>
-                        {order === "desc"
-                          ? "sorted descending"
-                          : "sorted ascending"}
-                      </Box>
-                    ) : null}
-                  </TableSortLabel>
-                </TableCell>
-              ))}
+              <TableCell>Market Cap Rank</TableCell>
+              <TableCell align="right">Coin</TableCell>
+              <TableCell align="right">Price</TableCell>
+              <TableCell align="right">Price Change in 1 Hour</TableCell>
+              <TableCell align="right">Price Change in 1 Day</TableCell>
+              <TableCell align="right">Price Change in 1 Week</TableCell>
+              <TableCell align="right">Total Volume</TableCell>
+              <TableCell align="right">Market Cap</TableCell>
               <TableCell>Last 7 Days Trend</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {stableSort(rows, getComparator(order, orderBy)).map((row, id) => (
+            {rows.map((row, id) => (
               <TableRow key={id}>
                 <TableCell component="th" scope="row">
-                  {row.market_cap_rank}
+                  {row.marketCapRank}
                 </TableCell>
                 <TableCell align="right">
-                  <img src={row.image} width="20" height="20"></img>
-                  {row.name}
+                  <img src={row.coinImage} width="20" height="20"></img>
+                  {row.coinName}
                   {" ("}
-                  {row.symbol}
+                  {row.coinSymbol}
                   {")"}
                 </TableCell>
-                <TableCell align="right">{row.current_price}</TableCell>
+                <TableCell align="right">{row.price}</TableCell>
                 <TableCell
                   align="right"
-                  style={styleColor(
-                    Number(row.price_change_percentage_1h_in_currency)
-                  )}
+                  style={styleColor(row.priceChangeOneHour)}
                 >
-                  {styleArrow(
-                    Number(row.price_change_percentage_1h_in_currency)
-                  )}
+                  {styleArrow(row.priceChangeOneHour)}
                 </TableCell>
                 <TableCell
                   align="right"
-                  style={styleColor(
-                    Number(row.price_change_percentage_24h_in_currency)
-                  )}
+                  style={styleColor(row.priceChangeOneDay)}
                 >
-                  {styleArrow(
-                    Number(row.price_change_percentage_24h_in_currency)
-                  )}
+                  {styleArrow(row.priceChangeOneDay)}
                 </TableCell>
                 <TableCell
                   align="right"
-                  style={styleColor(
-                    Number(row.price_change_percentage_7d_in_currency)
-                  )}
+                  style={styleColor(row.priceChangeOneWeek)}
                 >
-                  {styleArrow(
-                    Number(row.price_change_percentage_7d_in_currency)
-                  )}
+                  {styleArrow(row.priceChangeOneWeek)}
                 </TableCell>
-                <TableCell align="right">{row.total_volume}</TableCell>
-                <TableCell align="right">{row.market_cap}</TableCell>
+                <TableCell align="right">{row.dayVolume}</TableCell>
+                <TableCell align="right">{row.MarketCap}</TableCell>
                 <TableCell align="right">
-                  <TrendLineChart trendSevenDays={row.sparkline_in_7d} />
+                  <TrendLineChart trendSevenDays={row.sevenDayGraph} />
                 </TableCell>
               </TableRow>
             ))}
