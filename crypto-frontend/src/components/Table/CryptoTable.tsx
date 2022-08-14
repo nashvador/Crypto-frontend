@@ -28,8 +28,10 @@ interface chartApiData {
   sparkline_in_7d?: object;
 }
 
+// more documentation
 const CryptoTable = () => {
   // create object and concat object values into the url? Perhaps use custom hook, ask about using any and questions
+
   const [getChartApiData, setChartApiData] = useState<
     Array<chartApiData | any>
   >([]);

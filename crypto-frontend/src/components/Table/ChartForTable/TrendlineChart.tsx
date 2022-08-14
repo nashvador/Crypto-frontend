@@ -3,7 +3,11 @@ import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
-const TrendLineChart = ({ trendSevenDays }: any) => {
+const TrendLineChart = ({
+  trendSevenDays,
+}: {
+  trendSevenDays: Array<number>;
+}) => {
   const xAxisLabels: Array<string> = Array(trendSevenDays.length).fill("");
 
   const lineChartSettings = {
