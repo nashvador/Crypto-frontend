@@ -3,12 +3,10 @@ import provideApiCall from "../../services/api/utilities/provideApiCall";
 import CircularIndeterminate from "../../models/LoadingCircle";
 import { Container } from "@mui/material";
 import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import Parser from "html-react-parser";
-
+import { useParams } from "react-router-dom";
 interface CoinInformationTypes {
   image?: {
     thumb: string;
@@ -36,10 +34,10 @@ const IndividualCoinPage = () => {
     CoinInformationTypes | any
   >({});
   const [loading, setLoading] = useState<boolean>(true);
+  const id = useParams().id;
 
   const currency = "usd";
-  const baseURL =
-    "bitcoin?localization=false&tickers=false&market_data=true&community_data=true&developer_data=false&sparkline=false";
+  const baseURL = `${id}?localization=false&tickers=false&market_data=true&community_data=true&developer_data=false&sparkline=false`;
 
   useEffect(() => {
     provideApiCall.getCoinsData(baseURL).then((response) => {
