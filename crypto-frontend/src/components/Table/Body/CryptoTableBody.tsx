@@ -5,6 +5,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import TrendLineChart from "../ChartForTable/TrendlineChart";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
+import { Link } from "react-router-dom";
 
 const CryptoTableBody = ({
   valueToOrderBy,
@@ -59,10 +60,12 @@ const CryptoTableBody = ({
           </TableCell>
           <TableCell align="right">
             <img src={row.coinImage} width="20" height="20"></img>
-            {row.coinName}
-            {" ("}
-            {row.coinSymbol}
-            {")"}
+            <Link to={`/coins/${row.id}`} key={row.id}>
+              {row.coinName}
+              {" ("}
+              {row.coinSymbol}
+              {")"}
+            </Link>
           </TableCell>
           <TableCell align="right">{row.price}</TableCell>
           <TableCell align="right" style={styleColor(row.priceChangeOneHour)}>
