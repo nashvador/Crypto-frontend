@@ -29,8 +29,20 @@ const getMarketData = async (
     const responseData = handleError(response);
     return responseData;
   } catch (error) {
-    handleError(ErrorOutlineRounded);
+    handleError(error);
   }
 };
 
-export default { getAll, getMarketData };
+const getCoinsData = async (
+  coinDataURL: string
+): Promise<object | Array<object> | any> => {
+  try {
+    const response = await axios.get(baseURL + "coins/" + coinDataURL);
+    const responseData = handleError(response);
+    return responseData;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export default { getAll, getMarketData, getCoinsData };
