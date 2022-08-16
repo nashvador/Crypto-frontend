@@ -5,6 +5,8 @@ import CryptoTableHead from "./Body/CryptoTableHead";
 import CryptoTableBody from "./Body/CryptoTableBody";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
+import TableFooter from "@mui/material/TableFooter";
+import TablePagination from "@mui/material/TablePagination";
 
 interface chartApiData {
   market_cap_rank: number;
@@ -27,16 +29,19 @@ const CryptoTable = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [orderDirection, setOrderDirection] = useState<"asc" | "desc">("asc");
   const [valueToOrderBy, setValueToOrderBy] = useState<string>("");
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
 
-  const chartDataBaseURL =
-    "?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d";
+  const chartDataBaseURL = `?vs_currency=usd&order=market_cap_desc&per_page=${rowsPerPage}&page=${
+    page + 1
+  }&sparkline=true&price_change_percentage=1h%2C24h%2C7d`;
 
   useEffect(() => {
     provideApiCall.getMarketData(chartDataBaseURL).then((response) => {
       setChartApiData(response);
       setLoading(false);
     });
-  }, []);
+  }, [rowsPerPage, page]);
 
   function createData(
     marketCapRank: number,
@@ -121,6 +126,20 @@ const CryptoTable = () => {
     return stabilizedRowArray.map((el: any) => el[0]);
   };
 
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <div>
       <TableContainer>
@@ -143,6 +162,16 @@ const CryptoTable = () => {
           )}
         </Table>
       </TableContainer>
+      <TableFooter>
+        <TablePagination
+          component="div"
+          count={1000}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </TableFooter>
     </div>
   );
 };

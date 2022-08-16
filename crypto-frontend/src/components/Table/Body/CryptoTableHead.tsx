@@ -15,7 +15,7 @@ const CryptoTableHead = ({
   return (
     <TableHead>
       <TableRow>
-        <TableCell align="right">Market Cap Rank</TableCell>
+        <TableCell align="right">Rank</TableCell>
         <TableCell align="right">Coin</TableCell>
         <TableCell align="right" key="price">
           <TableSortLabel
