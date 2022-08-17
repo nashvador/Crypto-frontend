@@ -45,4 +45,16 @@ const getCoinsData = async (
   }
 };
 
-export default { getAll, getMarketData, getCoinsData };
+const getCoinsSearchData = async (
+  coinDataURL: string
+): Promise<object | Array<object> | any> => {
+  try {
+    const response = await axios.get(baseURL + "search/" + coinDataURL);
+    const responseData = handleError(response);
+    return responseData;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export default { getAll, getMarketData, getCoinsData, getCoinsSearchData };

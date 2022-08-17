@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import provideApiCall from "../../services/api/utilities/provideApiCall";
-import CircularIndeterminate from "../../models/LoadingCircle";
+import provideApiCall from "../services/api/utilities/provideApiCall";
+import CircularIndeterminate from "../models/LoadingCircle";
 import { Container } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { useParams } from "react-router-dom";
+
 interface CoinInformationTypes {
   image?: {
     thumb: string;
