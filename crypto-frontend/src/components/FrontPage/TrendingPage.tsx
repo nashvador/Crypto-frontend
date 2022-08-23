@@ -19,15 +19,12 @@ const TrendingPage = () => {
     });
   }, []);
 
-  console.log(trendingData.coins);
-
   return (
     <div>
       <List
         sx={{
           width: "100%",
           maxWidth: 180,
-          bgcolor: "background.paper",
         }}
       >
         {loading

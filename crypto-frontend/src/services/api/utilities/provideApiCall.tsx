@@ -1,8 +1,6 @@
-import React from "react";
 import axios from "axios";
 import { handleError, handleResponse } from "./responses";
 import logger from "./logger";
-import { ErrorOutlineRounded } from "@mui/icons-material";
 
 const baseURL = "https://api.coingecko.com/api/v3/";
 
