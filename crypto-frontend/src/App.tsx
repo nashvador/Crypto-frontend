@@ -1,5 +1,5 @@
 import IndividualCoinPage from "./components/IndividualCoinPage";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import FrontPage from "./components/FrontPage";
 
 function App() {

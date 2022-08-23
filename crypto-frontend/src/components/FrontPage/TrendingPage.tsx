@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import provideApiCall from "../services/api/utilities/provideApiCall";
+import provideApiCall from "../../services/api/utilities/provideApiCall";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Divider from "@mui/material/Divider";
-import CircularIndeterminate from "../models/LoadingCircle";
+import CircularIndeterminate from "../../models/LoadingCircle";
 import { Link } from "react-router-dom";
 
 const TrendingPage = () => {

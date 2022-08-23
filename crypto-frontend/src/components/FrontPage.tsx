@@ -1,6 +1,6 @@
 import CryptoTable from "./Table/CryptoTable";
-import TrendingPage from "./TrendingPage";
-import BarChart from "./BTCBarChart";
+import TrendingPage from "./FrontPage/TrendingPage";
+import BarChart from "./FrontPage/BTCBarChart";
 
 const FrontPage = () => {
   return (
