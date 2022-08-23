@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import provideApiCall from "../services/api/utilities/provideApiCall";
 import CircularIndeterminate from "../models/LoadingCircle";
 import { Container } from "@mui/material";
@@ -30,14 +30,13 @@ interface CoinInformationTypes {
   };
 }
 
-const IndividualCoinPage = () => {
+const IndividualCoinPage = ({ currency }: { currency: string }) => {
   const [getCoinInformation, setGetCoinInformation] = useState<
     CoinInformationTypes | any
   >({});
   const [loading, setLoading] = useState<boolean>(true);
   const id = useParams().id;
 
-  const currency = "usd";
   const baseURL = `${id}?localization=false&tickers=false&market_data=true&community_data=true&developer_data=false&sparkline=false`;
 
   useEffect(() => {

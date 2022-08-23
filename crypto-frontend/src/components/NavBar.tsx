@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import provideApiCall from "../services/api/utilities/provideApiCall";
 import axios from "axios";
 
@@ -10,9 +10,31 @@ import Link from "@mui/material/Link";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-const NavBar = () => {
-  const [getGlobalApiInfo, setGetGlobalApiInfo] = useState<object>({});
+interface globalApi {
+  data: {
+    active_cryptocurrencies?: number;
+    markets?: number;
+    total_market_cap: object;
+  };
+}
+
+const NavBar = ({
+  currency,
+  setCurrency,
+}: {
+  currency: string;
+  setCurrency: Dispatch<SetStateAction<string>>;
+}) => {
+  const [getGlobalApiInfo, setGetGlobalApiInfo] = useState<globalApi>({
+    data: {
+      total_market_cap: {},
+    },
+  });
 
   useEffect(() => {
     const getAll = async (): Promise<object> => {
@@ -25,7 +47,13 @@ const NavBar = () => {
     getAll();
   }, []);
 
-  console.log(getGlobalApiInfo);
+  console.log(getGlobalApiInfo.data);
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setCurrency(event.target.value as string);
+  };
+
+  console.log(currency);
 
   return (
     <Stack spacing={1}>
@@ -64,13 +92,29 @@ const NavBar = () => {
         <Divider orientation="horizontal" flexItem />
         <Toolbar sx={{ flexWrap: "wrap" }}>
           <Typography
-            variant="body1"
+            variant="caption"
             color="inherit"
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            CoinNOW
+            Coins:{getGlobalApiInfo.data.active_cryptocurrencies} Markets:
+            {getGlobalApiInfo.data.markets}
           </Typography>
+
+          <FormControl>
+            <InputLabel id="demo-simple-select-label">Currency</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={currency}
+              label="Currency"
+              onChange={handleChange}
+            >
+              <MenuItem value="usd">USD</MenuItem>
+              <MenuItem value="eur">EUR</MenuItem>
+              <MenuItem value="gbp">GBP</MenuItem>
+            </Select>
+          </FormControl>
         </Toolbar>
       </AppBar>
     </Stack>

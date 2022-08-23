@@ -14,7 +14,7 @@ interface VarChartData {
   market_caps: Array<Array<number>>;
 }
 
-const BarChart = () => {
+const BarChart = ({ currency }: { currency: string }) => {
   const [getCoinInformation, setGetCoinInformation] = useState<VarChartData>({
     prices: [],
     total_volumes: [],
@@ -23,15 +23,14 @@ const BarChart = () => {
   const [dateInformation, setDateInformation] = useState<number>(7);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const currency = "usd";
-  const baseURL = `bitcoin/market_chart?vs_currency=usd&days=${dateInformation}&interval=daily`;
+  const baseURL = `bitcoin/market_chart?vs_currency=${currency}&days=${dateInformation}&interval=daily`;
 
   useEffect(() => {
     provideApiCall.getCoinsData(baseURL).then((response) => {
       setGetCoinInformation(response);
       setLoading(false);
     });
-  }, [dateInformation]);
+  }, [dateInformation, currency]);
 
   const dates: Array<string> = getCoinInformation.total_volumes.map(
     (volumeInfoDay: Array<number>) =>

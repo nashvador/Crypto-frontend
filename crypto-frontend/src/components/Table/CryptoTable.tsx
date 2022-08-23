@@ -22,7 +22,7 @@ interface chartApiData {
   sparkline_in_7d?: object;
 }
 
-const CryptoTable = () => {
+const CryptoTable = ({ currency }: { currency: string }) => {
   const [getChartApiData, setChartApiData] = useState<
     Array<chartApiData | any>
   >([]);
@@ -32,7 +32,7 @@ const CryptoTable = () => {
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
 
-  const chartDataBaseURL = `?vs_currency=usd&order=market_cap_desc&per_page=${rowsPerPage}&page=${
+  const chartDataBaseURL = `?vs_currency=${currency}&order=market_cap_desc&per_page=${rowsPerPage}&page=${
     page + 1
   }&sparkline=true&price_change_percentage=1h%2C24h%2C7d`;
 
@@ -41,7 +41,7 @@ const CryptoTable = () => {
       setChartApiData(response);
       setLoading(false);
     });
-  }, [rowsPerPage, page]);
+  }, [rowsPerPage, page, currency]);
 
   function createData(
     marketCapRank: number,
