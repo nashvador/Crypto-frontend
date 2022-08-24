@@ -3,7 +3,6 @@ import provideApiCall from "../services/api/utilities/provideApiCall";
 import axios from "axios";
 
 import Stack from "@mui/material/Stack";
-import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
 import Link from "@mui/material/Link";
@@ -85,7 +84,7 @@ const NavBar = ({
               Portfolio
             </Link>
           </nav>
-          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+          <Button href="login" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
             Login
           </Button>
         </Toolbar>

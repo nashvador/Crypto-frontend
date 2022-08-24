@@ -4,6 +4,7 @@ import IndividualCoinPage from "./components/IndividualCoinPage";
 import { Routes, Route } from "react-router-dom";
 import FrontPage from "./components/FrontPage";
 import NavBar from "./components/NavBar";
+import SignIn from "./components/LogInPage";
 
 function App() {
   const [currency, setCurrency] = useState<string>("usd");
@@ -17,6 +18,7 @@ function App() {
           element={<IndividualCoinPage currency={currency} />}
         />
         <Route path="/" element={<FrontPage currency={currency} />} />
+        <Route path="/login" element={<SignIn />} />
       </Routes>
     </div>
   );
