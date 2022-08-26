@@ -1,6 +1,6 @@
 import axios from "axios";
 import { handleError, handleResponse } from "./responses";
-import logger from "./logger";
+import logger from "../../logger";
 
 const baseURL = "https://api.coingecko.com/api/v3/";
 
