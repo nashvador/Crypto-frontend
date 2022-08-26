@@ -78,7 +78,7 @@ const NavBar = ({
             <Link
               variant="button"
               color="text.primary"
-              href="/coins/bitcoin"
+              href="/portfolio"
               sx={{ my: 1, mx: 1.5 }}
             >
               Portfolio

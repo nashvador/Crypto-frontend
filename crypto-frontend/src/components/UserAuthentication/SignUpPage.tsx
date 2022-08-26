@@ -32,7 +32,8 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get("email"),
+      name: data.get("Name"),
+      username: data.get("username"),
       password: data.get("password"),
     });
   };
@@ -78,10 +79,10 @@ export default function SignUp() {
               <TextField
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
               />
             </Grid>
             <Grid item xs={12}>
