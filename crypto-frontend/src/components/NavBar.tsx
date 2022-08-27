@@ -13,6 +13,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { user } from "../App";
 
 interface globalApi {
   data: {
@@ -25,9 +26,13 @@ interface globalApi {
 const NavBar = ({
   currency,
   setCurrency,
+  user,
+  setUser,
 }: {
   currency: string;
   setCurrency: Dispatch<SetStateAction<string>>;
+  user: user | null;
+  setUser: Dispatch<SetStateAction<user | null>>;
 }) => {
   const [getGlobalApiInfo, setGetGlobalApiInfo] = useState<globalApi>({
     data: {
@@ -52,8 +57,10 @@ const NavBar = ({
     setCurrency(event.target.value as string);
   };
 
-  console.log(currency);
-
+  const onLogOut = (): void => {
+    window.localStorage.removeItem("loggedPortfolioUser");
+    setUser(null);
+  };
   return (
     <Stack spacing={1}>
       <AppBar
@@ -84,9 +91,23 @@ const NavBar = ({
               Portfolio
             </Link>
           </nav>
-          <Button href="login" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
-            Login
-          </Button>
+          {user ? (
+            <div>
+              {" "}
+              {user.name} is logged in
+              <Button
+                onClick={onLogOut}
+                variant="outlined"
+                sx={{ my: 1, mx: 1.5 }}
+              >
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <Button href="login" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+              Login
+            </Button>
+          )}
         </Toolbar>
         <Divider orientation="horizontal" flexItem />
         <Toolbar sx={{ flexWrap: "wrap" }}>

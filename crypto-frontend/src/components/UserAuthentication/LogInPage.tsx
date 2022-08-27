@@ -1,6 +1,7 @@
-import { Dispatch, SetStateAction } from "React";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Navigate } from "react-router-dom";
 
+import Alert from "@mui/material/Alert";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,7 +14,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import loginCall from "../../services/loginCall";
-import React from "react";
 import { user } from "../../App";
 
 export interface loginInfo {
@@ -45,18 +45,23 @@ export default function SignIn({
   user: user | null;
   setUser: Dispatch<SetStateAction<user | null>>;
 }) {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      const user = await loginCall.login({
+      const user = await loginCall.login("http://localhost:3005/api/login/", {
         username: data.get("username"),
         password: data.get("password"),
       });
       window.localStorage.setItem("loggedPortfolioUser", JSON.stringify(user));
       setUser(user);
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      setErrorMessage(err.response.data.error);
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 3000);
     }
   };
 
@@ -75,6 +80,7 @@ export default function SignIn({
               alignItems: "center",
             }}
           >
+            {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : ""}
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,6 +10,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import signUpCall from "../../services/loginCall";
+
+export interface signupInfo {
+  username: FormDataEntryValue | null;
+  name: FormDataEntryValue | null;
+  password: FormDataEntryValue | null;
+}
 
 function Copyright(props: any) {
   return (
@@ -28,14 +36,23 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get("Name"),
-      username: data.get("username"),
-      password: data.get("password"),
-    });
+    try {
+      const user = await signUpCall.login("http://localhost:3005/api/users/", {
+        name: data.get("Name"),
+        username: data.get("username"),
+        password: data.get("password"),
+      });
+    } catch (err: any) {
+      setErrorMessage(err.response.data.error);
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 3000);
+    }
   };
 
   return (

@@ -29,7 +29,12 @@ function App() {
 
   return (
     <div>
-      <NavBar currency={currency} setCurrency={setCurrency} />
+      <NavBar
+        currency={currency}
+        setCurrency={setCurrency}
+        user={user}
+        setUser={setUser}
+      />
       <Routes>
         <Route
           path="/coins/:id"
