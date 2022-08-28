@@ -6,8 +6,8 @@ import FrontPage from "./components/FrontPage";
 import NavBar from "./components/NavBar";
 import SignIn from "./components/UserAuthentication/LogInPage";
 import SignUp from "./components/UserAuthentication/SignUpPage";
-import Portfolio from "./components/Portfolio";
-import userEvent from "@testing-library/user-event";
+import Portfolio from "./components/Portfolio/Portfolio";
+import UserToken from "./services/loginCall";
 
 export interface user {
   token: string;
@@ -41,7 +41,10 @@ function App() {
           element={<IndividualCoinPage currency={currency} />}
         />
         <Route path="/" element={<FrontPage currency={currency} />} />
-        <Route path="/portfolio" element={<Portfolio currency={currency} />} />
+        <Route
+          path="/portfolio"
+          element={<Portfolio user={user} currency={currency} />}
+        />
 
         <Route
           path="/login"
