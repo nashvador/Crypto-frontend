@@ -1,6 +1,6 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import provideApiCall from "../services/api/utilities/provideApiCall";
 import axios from "axios";
+import SearchBar from "./searchBar";
 
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
@@ -120,7 +120,7 @@ const NavBar = ({
             Coins:{getGlobalApiInfo.data.active_cryptocurrencies} Markets:
             {getGlobalApiInfo.data.markets}
           </Typography>
-
+          <SearchBar />
           <FormControl>
             <InputLabel id="demo-simple-select-label">Currency</InputLabel>
             <Select

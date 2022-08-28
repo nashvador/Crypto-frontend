@@ -44,7 +44,7 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
       setGetCoinInformation(response);
       setLoading(false);
     });
-  }, []);
+  }, [id]);
 
   console.log(getCoinInformation);
 

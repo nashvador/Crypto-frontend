@@ -56,7 +56,7 @@ const Portfolio = ({
   console.log(coinString);
   console.log(coinInfo);
 
-  return <div>hi</div>;
+  return <div>hi </div>;
 };
 
 export default Portfolio;
