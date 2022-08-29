@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { user } from "../../App";
+import PortfolioModal from "./portfolioModal";
 
 const Portfolio = ({
   currency,
@@ -56,7 +57,11 @@ const Portfolio = ({
   console.log(coinString);
   console.log(coinInfo);
 
-  return <div>hi </div>;
+  return (
+    <div>
+      <PortfolioModal />
+    </div>
+  );
 };
 
 export default Portfolio;
