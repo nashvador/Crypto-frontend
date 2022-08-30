@@ -104,7 +104,7 @@ const NavBar = ({
               </Button>
             </div>
           ) : (
-            <Button href="login" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+            <Button href="/login" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
               Login
             </Button>
           )}
