@@ -4,16 +4,18 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import SearchBar from "./PortfolioModalSearch";
+import Box from "@mui/material/Box";
 
 export default function PortfolioModal() {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<Dayjs | null>(null);
+  const [valueDay, setValueDay] = useState<Dayjs | null>(null);
+  const [value, setValue] = useState<any>(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,11 +30,15 @@ export default function PortfolioModal() {
       <Button variant="outlined" onClick={handleClickOpen}>
         Add a coin to your portfolio
       </Button>
+
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add a coin to your portfolio</DialogTitle>
+
         <DialogContent>
+          <Box>{value ? <img src={value.large} /> : ""} </Box>
           <TextField
             id="Amount Purchased"
+            name="amount"
             label="Number"
             type="number"
             InputLabelProps={{
@@ -42,17 +48,18 @@ export default function PortfolioModal() {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               label="Date Purchased"
-              value={value}
+              value={valueDay}
               onChange={(newValue) => {
-                setValue(newValue);
+                setValueDay(newValue);
               }}
-              renderInput={(params) => <TextField {...params} />}
+              renderInput={(params) => <TextField {...params} name="date" />}
             />
           </LocalizationProvider>
+          <SearchBar value={value} setValue={setValue} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={handleClose}>Cancel Coin Purchase</Button>
+          <Button onClick={handleClose}>Buy Coin</Button>
         </DialogActions>
       </Dialog>
     </div>
