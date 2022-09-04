@@ -1,12 +1,16 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export default function SearchBar() {
-  const [value, setValue] = React.useState<any>();
+export default function SearchBar({
+  value,
+  setValue,
+}: {
+  value: any;
+  setValue: React.Dispatch<React.SetStateAction<any>>;
+}) {
   const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState<Array<any>>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -25,15 +29,14 @@ export default function SearchBar() {
     }
   }, [inputValue]);
 
-  const navigate = useNavigate();
-
   return (
     <div>
       <Autocomplete
         value={value}
         onChange={(event: any, newValue: any) => {
           event.preventDefault();
-          navigate(`coins/${newValue.id}`);
+          setValue(newValue);
+          console.log(newValue);
         }}
         inputValue={inputValue}
         onInputChange={(event, newInputValue) => {
@@ -49,6 +52,7 @@ export default function SearchBar() {
           <TextField
             {...params}
             label="Search for a coin"
+            name="searchData"
             InputProps={{
               ...params.InputProps,
               endAdornment: (

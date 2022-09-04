@@ -7,7 +7,6 @@ import NavBar from "./components/NavBar";
 import SignIn from "./components/UserAuthentication/LogInPage";
 import SignUp from "./components/UserAuthentication/SignUpPage";
 import Portfolio from "./components/Portfolio/Portfolio";
-import UserToken from "./services/loginCall";
 
 export interface user {
   token: string;

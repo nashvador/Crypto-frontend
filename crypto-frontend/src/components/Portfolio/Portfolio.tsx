@@ -12,7 +12,7 @@ const Portfolio = ({
 }) => {
   const [portfolio, setPortfolio] = useState<Array<object> | null>(null);
   const [coinString, setCoinString] = useState<string | null>(null);
-  const [coinInfo, setCoinInfo] = useState<string>("");
+  const [coinInfo, setCoinInfo] = useState<Array<any>>([]);
 
   const config: object = {
     headers: { Authorization: `bearer ${user?.token}` },
@@ -53,13 +53,35 @@ const Portfolio = ({
     }
   }, [portfolio]);
 
-  console.log(portfolio);
-  console.log(coinString);
-  console.log(coinInfo);
+  const displayArray: any = [];
+
+  portfolio?.forEach((portfolioCoin: any) => {
+    for (let i = 0; i < coinInfo.length; i++) {
+      if (portfolioCoin.coinId === coinInfo[i].id) {
+        displayArray.push({ ...portfolioCoin, ...coinInfo[i] });
+      }
+    }
+  });
+
+  console.log(displayArray);
 
   return (
     <div>
       <PortfolioModal />
+      Your Coins
+      {displayArray.map((coinDisplayInfo: any) => {
+        return (
+          <div key={coinDisplayInfo.id}>
+            <img src={coinDisplayInfo.image} />
+            {coinDisplayInfo.name} {coinDisplayInfo.symbol.toUpperCase()}{" "}
+            {`Date purchased: ${coinDisplayInfo.date}`}
+            {`Amount owned: ${coinDisplayInfo.amountPurchased}`}
+            {`Value of owned: ${
+              coinDisplayInfo.amountPurchased * coinDisplayInfo.current_price
+            }`}
+          </div>
+        );
+      })}
     </div>
   );
 };
