@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -11,11 +11,19 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import SearchBar from "./PortfolioModalSearch";
 import Box from "@mui/material/Box";
+import axios from "axios";
 
-export default function PortfolioModal() {
+export default function PortfolioModal({
+  config,
+  setPortfolio,
+}: {
+  config: object;
+  setPortfolio: Dispatch<SetStateAction<Array<object> | null>>;
+}) {
   const [open, setOpen] = useState(false);
   const [valueDay, setValueDay] = useState<Dayjs | null>(null);
   const [value, setValue] = useState<any>(null);
+  const [amountValue, setAmountValue] = useState<number>();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,6 +32,22 @@ export default function PortfolioModal() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleSubmit = async () => {
+    const response = await axios.post(
+      "http://localhost:3005/api/portfolio",
+      { coin: value.id, date: valueDay, amount: amountValue },
+      config
+    );
+    console.log(response.data);
+    setPortfolio((oldPortfolioData: any) => [
+      ...oldPortfolioData,
+      response.data,
+    ]);
+    handleClose();
+  };
+
+  console.log(amountValue);
 
   return (
     <div>
@@ -41,6 +65,7 @@ export default function PortfolioModal() {
             name="amount"
             label="Number"
             type="number"
+            onChange={(e) => setAmountValue(Number(e.target.value))}
             InputLabelProps={{
               shrink: true,
             }}
@@ -59,7 +84,7 @@ export default function PortfolioModal() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel Coin Purchase</Button>
-          <Button onClick={handleClose}>Buy Coin</Button>
+          <Button onClick={handleSubmit}>Buy Coin</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { user } from "../../App";
 import PortfolioModal from "./portfolioModal";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const Portfolio = ({
   currency,
@@ -33,6 +34,8 @@ const Portfolio = ({
     }
   }, [user]);
 
+  console.log(portfolio);
+
   useEffect(() => {
     if (portfolio) {
       const portfolioStringCombined: string = portfolio
@@ -58,16 +61,27 @@ const Portfolio = ({
   portfolio?.forEach((portfolioCoin: any) => {
     for (let i = 0; i < coinInfo.length; i++) {
       if (portfolioCoin.coinId === coinInfo[i].id) {
-        displayArray.push({ ...portfolioCoin, ...coinInfo[i] });
+        displayArray.push({ ...coinInfo[i], ...portfolioCoin });
       }
     }
   });
 
   console.log(displayArray);
 
+  const deleteItem = async (idCoin: string) => {
+    if (portfolio) {
+      const response = await axios.delete(
+        `http://localhost:3005/api/portfolio/${idCoin}`,
+        config
+      );
+      console.log(response.data);
+      setPortfolio(portfolio.filter((coin: any) => coin.id !== idCoin));
+    }
+  };
+
   return (
     <div>
-      <PortfolioModal />
+      <PortfolioModal config={config} setPortfolio={setPortfolio} />
       Your Coins
       {displayArray.map((coinDisplayInfo: any) => {
         return (
@@ -79,6 +93,7 @@ const Portfolio = ({
             {`Value of owned: ${
               coinDisplayInfo.amountPurchased * coinDisplayInfo.current_price
             }`}
+            <DeleteIcon onClick={() => deleteItem(coinDisplayInfo.id)} />
           </div>
         );
       })}
