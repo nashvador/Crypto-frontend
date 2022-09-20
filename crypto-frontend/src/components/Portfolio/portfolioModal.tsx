@@ -51,7 +51,7 @@ export default function PortfolioModal({
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="outlined" onClick={handleClickOpen} id="Portfolio-Modal">
         Add a coin to your portfolio
       </Button>
 
@@ -61,7 +61,7 @@ export default function PortfolioModal({
         <DialogContent>
           <Box>{value ? <img src={value.large} /> : ""} </Box>
           <TextField
-            id="Amount Purchased"
+            id="Amount-Purchased"
             name="amount"
             label="Number"
             type="number"
@@ -77,14 +77,18 @@ export default function PortfolioModal({
               onChange={(newValue) => {
                 setValueDay(newValue);
               }}
-              renderInput={(params) => <TextField {...params} name="date" />}
+              renderInput={(params) => (
+                <TextField {...params} name="date" id="Date-Purchased" />
+              )}
             />
           </LocalizationProvider>
           <SearchBar value={value} setValue={setValue} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel Coin Purchase</Button>
-          <Button onClick={handleSubmit}>Buy Coin</Button>
+          <Button onClick={handleSubmit} id="Buy-Coin">
+            Buy Coin
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

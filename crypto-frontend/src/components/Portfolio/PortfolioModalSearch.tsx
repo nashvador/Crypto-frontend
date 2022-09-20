@@ -42,7 +42,7 @@ export default function SearchBar({
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);
         }}
-        id="controllable-states-demo"
+        id="Coin-Purchased"
         isOptionEqualToValue={(option, value) => option.id === value.id}
         getOptionLabel={(option) => option.id}
         filterOptions={(x) => x}
