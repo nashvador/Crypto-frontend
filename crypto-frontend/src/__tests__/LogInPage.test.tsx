@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import SignIn from "../components/UserAuthentication/LogInPage";
+import userEvent from "@testing-library/user-event";
 
 describe("<SignIn />", () => {
   let container: HTMLElement | null;
@@ -16,11 +17,6 @@ describe("<SignIn />", () => {
   });
 
   test("renders Sign in button", () => {
-    const element = screen.getByText("Sign in");
-    expect(element).toBeDefined();
-  });
-
-  test("renders Input Page", () => {
     const element = screen.getByText("Sign in");
     expect(element).toBeDefined();
   });
