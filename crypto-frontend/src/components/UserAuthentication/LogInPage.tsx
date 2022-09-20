@@ -118,6 +118,7 @@ export default function SignIn({
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                id="login-button"
               >
                 Sign In
               </Button>

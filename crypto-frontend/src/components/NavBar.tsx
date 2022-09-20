@@ -41,12 +41,19 @@ const NavBar = ({
   });
 
   useEffect(() => {
-    const getAll = async (): Promise<object> => {
-      const response = await axios.post("http://localhost:3005/api/coininfo/", {
-        url: "https://api.coingecko.com/api/v3/global",
-      });
-      setGetGlobalApiInfo(response.data);
-      return response;
+    const getAll = async (): Promise<object | unknown> => {
+      try {
+        const response = await axios.post(
+          "http://localhost:3005/api/coininfo/",
+          {
+            url: "https://api.coingecko.com/api/v3/global",
+          }
+        );
+        setGetGlobalApiInfo(response.data);
+        return response;
+      } catch (err) {
+        return err;
+      }
     };
     getAll();
   }, []);
