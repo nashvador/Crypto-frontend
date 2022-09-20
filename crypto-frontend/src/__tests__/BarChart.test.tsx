@@ -21,15 +21,8 @@ describe("<BarChart />", () => {
     expect(element).toBeDefined();
   });
 
-  test("button is clickable", async () => {
-    const mockHandler = jest.fn();
-    const element = screen.getByText("7 days");
-    const user = userEvent.setup();
-
-    await user.click(element);
-
-    expect(mockHandler.mock.calls).toHaveLength(1);
-
-    screen.debug();
+  test("renders another button", () => {
+    const element = screen.getByText("30 days");
+    expect(element).toBeDefined();
   });
 });
