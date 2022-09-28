@@ -4,7 +4,7 @@ describe("Crypto App Main Page Functions", function () {
   beforeEach(function () {
     cy.visit("http://localhost:3000");
     cy.intercept("POST", "/api/coininfo", (req) => {
-      req.continue((res) => {
+      req.reply((res) => {
         if (req.body.url === "https://api.coingecko.com/api/v3/global") {
           res.send({ fixture: "globalData.json" });
         }
