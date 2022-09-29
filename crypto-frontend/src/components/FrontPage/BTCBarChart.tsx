@@ -3,7 +3,6 @@ import provideApiCall from "../../services/api/utilities/provideApiCall";
 
 import { Bar } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
-import { DateRangeSharp } from "@mui/icons-material";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 Chart.register(...registerables);
@@ -26,10 +25,13 @@ const BarChart = ({ currency }: { currency: string }) => {
   const baseURL = `bitcoin/market_chart?vs_currency=${currency}&days=${dateInformation}&interval=daily`;
 
   useEffect(() => {
-    provideApiCall.getCoinsData(baseURL).then((response) => {
-      setGetCoinInformation(response);
-      setLoading(false);
-    });
+    const getAndSetData = async (): Promise<void> => {
+      const response: any = await provideApiCall.callApiInfo(
+        `https://api.coingecko.com/api/v3/coins/${baseURL}`
+      );
+      setGetCoinInformation(response.data);
+    };
+    getAndSetData();
   }, [dateInformation, currency]);
 
   const dates: Array<string> = getCoinInformation.total_volumes.map(

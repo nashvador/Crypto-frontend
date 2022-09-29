@@ -8,9 +8,7 @@ interface apiInformation extends Object {
   data: any;
 }
 
-const callApiInfo = async (
-  apiUrl: string
-): Promise<apiInformation | string> => {
+const callApiInfo = async (apiUrl: string): Promise<any> => {
   try {
     const response = await axios.post(process.env.REACT_APP_API_ENDPOINT!, {
       url: apiUrl,
