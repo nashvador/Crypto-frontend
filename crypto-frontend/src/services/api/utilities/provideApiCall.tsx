@@ -4,6 +4,23 @@ import logger from "../../logger";
 
 const baseURL = "https://api.coingecko.com/api/v3/";
 
+interface apiInformation extends Object {
+  data: any;
+}
+
+const callApiInfo = async (
+  apiUrl: string
+): Promise<apiInformation | string> => {
+  try {
+    const response = await axios.post(process.env.REACT_APP_API_ENDPOINT!, {
+      url: apiUrl,
+    });
+    return response;
+  } catch (err) {
+    return (err as Error).message;
+  }
+};
+
 const getAll = async (
   additionalURL: string
 ): Promise<object | Array<object> | any> => {
@@ -55,4 +72,10 @@ const getCoinsSearchData = async (
   }
 };
 
-export default { getAll, getMarketData, getCoinsData, getCoinsSearchData };
+export default {
+  getAll,
+  getMarketData,
+  getCoinsData,
+  getCoinsSearchData,
+  callApiInfo,
+};

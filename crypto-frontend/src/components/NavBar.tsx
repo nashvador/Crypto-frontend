@@ -1,5 +1,4 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import axios from "axios";
 import SearchBar from "./searchBar";
 
 import Stack from "@mui/material/Stack";
@@ -14,13 +13,10 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { user } from "../App";
+import provideApiCall from "../services/api/utilities/provideApiCall";
 
 interface globalApi {
-  data: {
-    active_cryptocurrencies?: number;
-    markets?: number;
-    total_market_cap: object;
-  };
+  data: any;
 }
 
 const NavBar = ({
@@ -35,27 +31,19 @@ const NavBar = ({
   setUser: Dispatch<SetStateAction<user | null>>;
 }) => {
   const [getGlobalApiInfo, setGetGlobalApiInfo] = useState<globalApi>({
-    data: {
-      total_market_cap: {},
-    },
+    data: {},
   });
 
   useEffect(() => {
-    const getAll = async (): Promise<object | unknown> => {
-      try {
-        const response = await axios.post(
-          "http://localhost:3005/api/coininfo/",
-          {
-            url: "https://api.coingecko.com/api/v3/global",
-          }
-        );
+    const getAndSetData = async (): Promise<void> => {
+      const response: globalApi | string = await provideApiCall.callApiInfo(
+        "https://api.coingecko.com/api/v3/global"
+      );
+      if (typeof response !== "string") {
         setGetGlobalApiInfo(response.data);
-        return response;
-      } catch (err) {
-        return err;
       }
     };
-    getAll();
+    getAndSetData();
   }, []);
 
   console.log(getGlobalApiInfo.data);
