@@ -13,11 +13,17 @@ const TrendingPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    provideApiCall.getCoinsSearchData("trending").then((response) => {
-      setTrendingData(response);
+    const getAndSetData = async (): Promise<void> => {
+      const response: any = await provideApiCall.callApiInfo(
+        `https://api.coingecko.com/api/v3/search/trending`
+      );
+      setTrendingData(response.data);
       setLoading(false);
-    });
+    };
+    getAndSetData();
   }, []);
+
+  console.log(trendingData);
 
   return (
     <div>
