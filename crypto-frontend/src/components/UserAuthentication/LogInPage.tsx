@@ -51,7 +51,7 @@ export default function SignIn({
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      const user = await loginCall.login("http://localhost:3005/api/login/", {
+      const user = await loginCall.login("api/login", {
         username: data.get("username"),
         password: data.get("password"),
       });

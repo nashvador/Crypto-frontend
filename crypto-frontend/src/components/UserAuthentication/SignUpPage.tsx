@@ -42,7 +42,8 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      const user = await signUpCall.login("http://localhost:3005/api/users/", {
+      // uses same login endpoint as before
+      const user = await signUpCall.login("api/users/", {
         name: data.get("Name"),
         username: data.get("username"),
         password: data.get("password"),
