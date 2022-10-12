@@ -5,6 +5,8 @@ import { Bar } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { Grid } from "@mui/material";
+
 Chart.register(...registerables);
 
 interface VarChartData {
@@ -86,21 +88,31 @@ const BarChart = ({ currency }: { currency: string }) => {
   };
 
   return (
-    <div>
-      {" "}
-      <Bar data={barChartSettings} options={options} />
-      <ToggleButtonGroup
-        color="primary"
-        value={dateInformation}
-        exclusive
-        onChange={handleChange}
+    <Grid container spacing={1}>
+      <Grid item xs={10}>
+        <Bar data={barChartSettings} options={options} />
+      </Grid>
+      <Grid
+        item
+        xs={2}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
       >
-        <ToggleButton value="7">7 days</ToggleButton>
-        <ToggleButton value="30">30 days</ToggleButton>
-        <ToggleButton value="180">6 months</ToggleButton>
-        <ToggleButton value="360">1 year</ToggleButton>
-      </ToggleButtonGroup>{" "}
-    </div>
+        <ToggleButtonGroup
+          color="primary"
+          value={dateInformation}
+          exclusive
+          onChange={handleChange}
+          orientation="vertical"
+        >
+          <ToggleButton value="7">7 days</ToggleButton>
+          <ToggleButton value="30">30 days</ToggleButton>
+          <ToggleButton value="180">6 months</ToggleButton>
+          <ToggleButton value="360">1 year</ToggleButton>
+        </ToggleButtonGroup>{" "}
+      </Grid>
+    </Grid>
   );
 };
 
