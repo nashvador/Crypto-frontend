@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import axios from "axios";
-import CircularProgress from "@mui/material/CircularProgress";
 
 export default function SearchBar() {
   const [value, setValue] = React.useState<any>();
@@ -53,9 +52,6 @@ export default function SearchBar() {
               ...params.InputProps,
               endAdornment: (
                 <React.Fragment>
-                  {loading ? (
-                    <CircularProgress color="inherit" size={20} />
-                  ) : null}
                   {params.InputProps.endAdornment}
                 </React.Fragment>
               ),

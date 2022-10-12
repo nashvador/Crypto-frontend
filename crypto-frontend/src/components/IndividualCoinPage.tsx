@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import provideApiCall from "../services/api/utilities/provideApiCall";
-import CircularIndeterminate from "../models/LoadingCircle";
+import { CircularProgress } from "@mui/material";
 import { Container } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import Paper from "@mui/material";
 import { useParams } from "react-router-dom";
 
 interface CoinInformationTypes {
@@ -40,10 +41,13 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
   const baseURL = `${id}?localization=false&tickers=false&market_data=true&community_data=true&developer_data=false&sparkline=false`;
 
   useEffect(() => {
-    provideApiCall.getCoinsData(baseURL).then((response) => {
-      setGetCoinInformation(response);
-      setLoading(false);
-    });
+    const getAndSetData = async (): Promise<void> => {
+      const response: any = await provideApiCall.callApiInfo(
+        `https://api.coingecko.com/api/v3/coins/${baseURL}`
+      );
+      setGetCoinInformation(response.data);
+    };
+    getAndSetData();
   }, [id]);
 
   console.log(getCoinInformation);
@@ -71,7 +75,16 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
   return (
     <div>
       {loading ? (
-        CircularIndeterminate()
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100vh",
+          }}
+        >
+          <CircularProgress size="10rem" />
+        </div>
       ) : (
         <div>
           {" "}
@@ -87,15 +100,23 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
               {")"}
             </div>
             <div>
-              {getCoinInformation.market_data?.current_price[currency]}{" "}
+              Current Price:{" "}
+              {getCoinInformation.market_data?.current_price[currency]}
               {styleArrow(
                 getCoinInformation.market_data?.price_change_percentage_24h
               )}
             </div>
 
-            <div>{getCoinInformation.market_data.market_cap[currency]}</div>
-            <div>{getCoinInformation.market_data.total_volume[currency]}</div>
-            <div>{getCoinInformation.market_data.total_supply}</div>
+            <div>
+              Market Cap: {getCoinInformation.market_data.market_cap[currency]}
+            </div>
+            <div>
+              Total Volume:
+              {getCoinInformation.market_data.total_volume[currency]}
+            </div>
+            <div>
+              Total Supply: {getCoinInformation.market_data.total_supply}
+            </div>
           </Container>
           <Container maxWidth="sm">
             <div
