@@ -10,9 +10,12 @@ interface apiInformation extends Object {
 
 const callApiInfo = async (apiUrl: string): Promise<any> => {
   try {
-    const response = await axios.post(process.env.REACT_APP_API_ENDPOINT!, {
-      url: apiUrl,
-    });
+    const response = await axios.post(
+      process.env.REACT_APP_API_ENDPOINT! + "api/coininfo/",
+      {
+        url: apiUrl,
+      }
+    );
     return response;
   } catch (err) {
     return (err as Error).message;
