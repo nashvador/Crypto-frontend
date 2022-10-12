@@ -46,6 +46,7 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
         `https://api.coingecko.com/api/v3/coins/${baseURL}`
       );
       setGetCoinInformation(response.data);
+      setLoading(false);
     };
     getAndSetData();
   }, [id]);
