@@ -8,7 +8,6 @@ export default function SearchBar() {
   const [value, setValue] = React.useState<any>();
   const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState<Array<any>>([]);
-  const [loading, setLoading] = React.useState<boolean>(true);
 
   const getSearch = async () => {
     const response = await axios.get(
@@ -19,7 +18,6 @@ export default function SearchBar() {
 
   React.useEffect(() => {
     if (inputValue.length >= 2) {
-      setLoading(false);
       getSearch().then((res) => setOptions(res.coins));
     }
   }, [inputValue]);

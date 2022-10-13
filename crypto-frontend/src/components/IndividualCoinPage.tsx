@@ -1,12 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import provideApiCall from "../services/api/utilities/provideApiCall";
-import { CircularProgress } from "@mui/material";
-import { Container } from "@mui/material";
-import Chip from "@mui/material/Chip";
+import {
+  CircularProgress,
+  Paper,
+  Grid,
+  Typography,
+  Avatar,
+  Chip,
+} from "@mui/material";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import Paper from "@mui/material";
 import { useParams } from "react-router-dom";
 
 interface CoinInformationTypes {
@@ -74,7 +78,7 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
   };
 
   return (
-    <div>
+    <Fragment>
       {loading ? (
         <div
           style={{
@@ -87,48 +91,75 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
           <CircularProgress size="10rem" />
         </div>
       ) : (
-        <div>
-          {" "}
-          <Container maxWidth="sm">
-            <Chip
-              label={`Market Cap Rank ${getCoinInformation.market_data?.market_cap_rank}`}
-            />
-            <div>
-              {" "}
-              <img src={getCoinInformation.image?.thumb} />{" "}
-              {getCoinInformation.name} {"("}
-              {getCoinInformation.symbol}
-              {")"}
-            </div>
-            <div>
-              Current Price:{" "}
-              {getCoinInformation.market_data?.current_price[currency]}
-              {styleArrow(
-                getCoinInformation.market_data?.price_change_percentage_24h
-              )}
-            </div>
-
-            <div>
-              Market Cap: {getCoinInformation.market_data.market_cap[currency]}
-            </div>
-            <div>
-              Total Volume:
-              {getCoinInformation.market_data.total_volume[currency]}
-            </div>
-            <div>
-              Total Supply: {getCoinInformation.market_data.total_supply}
-            </div>
-          </Container>
-          <Container maxWidth="sm">
-            <div
+        <Grid
+          container
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          spacing={1}
+          style={{ minHeight: "100vh" }}
+        >
+          <Grid item xs={3}>
+            <Paper
+              sx={{
+                height: 200,
+                width: 300,
+              }}
+            >
+              <Chip
+                label={`Rank ${getCoinInformation.market_data?.market_cap_rank}`}
+              />
+              <Avatar
+                alt="coin-image"
+                src={getCoinInformation.image?.small}
+                variant="square"
+              ></Avatar>
+              <Typography>
+                {getCoinInformation.name} {"("}
+                {getCoinInformation.symbol} {")"}
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={3}>
+            <Paper
+              sx={{
+                height: 200,
+                width: 300,
+              }}
+            >
+              <Typography>
+                {`Current Price : ${getCoinInformation.market_data?.current_price[currency]}`}
+                {styleArrow(
+                  getCoinInformation.market_data?.price_change_percentage_24h
+                )}
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={3}>
+            <Paper
+              sx={{
+                height: 200,
+                width: 300,
+              }}
+            >
+              <Typography>
+                {`Market Cap: ${getCoinInformation.market_data.market_cap[currency]}`}
+                {`Total Volume:
+              ${getCoinInformation.market_data.total_volume[currency]}`}
+                {`Total Supply: ${getCoinInformation.market_data.total_supply}`}
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={9}>
+            <Typography
               dangerouslySetInnerHTML={{
                 __html: getCoinInformation.description?.en,
               }}
-            ></div>
-          </Container>{" "}
-        </div>
+            ></Typography>
+          </Grid>
+        </Grid>
       )}
-    </div>
+    </Fragment>
   );
 };
 
