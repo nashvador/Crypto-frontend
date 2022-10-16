@@ -56,6 +56,7 @@ const NavBar = ({
     window.localStorage.removeItem("loggedPortfolioUser");
     setUser(null);
   };
+
   return (
     <Stack spacing={1}>
       <AppBar

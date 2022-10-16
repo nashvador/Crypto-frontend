@@ -9,8 +9,7 @@ import {
   Chip,
 } from "@mui/material";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { ArrowDropDown, ArrowDropUp, Layers } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 
 interface CoinInformationTypes {
@@ -61,7 +60,7 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
     if (chartProp?.toString().includes("-")) {
       return (
         <div style={{ color: "red" }}>
-          <ArrowDropDownIcon fontSize="small" />
+          <ArrowDropDown fontSize="small" />
           {chartProp.toFixed(2)}
           {"%"}
         </div>
@@ -69,7 +68,7 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
     } else {
       return (
         <div style={{ color: "green" }}>
-          <ArrowDropUpIcon fontSize="small" />
+          <ArrowDropUp fontSize="small" />
           {chartProp?.toFixed(2)}
           {"%"}
         </div>
@@ -106,18 +105,34 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
                 width: 300,
               }}
             >
-              <Chip
-                label={`Rank ${getCoinInformation.market_data?.market_cap_rank}`}
-              />
-              <Avatar
-                alt="coin-image"
-                src={getCoinInformation.image?.small}
-                variant="square"
-              ></Avatar>
-              <Typography>
-                {getCoinInformation.name} {"("}
-                {getCoinInformation.symbol} {")"}
-              </Typography>
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                spacing={0}
+              >
+                <Grid item>
+                  <Chip
+                    label={`Rank ${getCoinInformation.market_data?.market_cap_rank}`}
+                  />
+                </Grid>
+                <Grid>
+                  <Avatar
+                    alt="coin-image"
+                    src={getCoinInformation.image?.small}
+                    variant="square"
+                  ></Avatar>
+                </Grid>
+                <Grid item>
+                  <Typography>
+                    {getCoinInformation.name} {"("}
+                    {getCoinInformation.symbol}
+                    {")"}
+                  </Typography>
+                </Grid>
+                <Chip label={getCoinInformation.links.homepage[0]}></Chip>
+              </Grid>
             </Paper>
           </Grid>
           <Grid item xs={3}>
@@ -127,12 +142,67 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
                 width: 300,
               }}
             >
-              <Typography>
-                {`Current Price : ${getCoinInformation.market_data?.current_price[currency]}`}
-                {styleArrow(
-                  getCoinInformation.market_data?.price_change_percentage_24h
-                )}
-              </Typography>
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                spacing={0}
+              >
+                <Grid item>
+                  <Typography>
+                    {getCoinInformation.market_data?.current_price[currency]}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  {styleArrow(
+                    getCoinInformation.market_data?.price_change_percentage_24h
+                  )}
+                </Grid>
+                <Grid item>
+                  <Layers fontSize="large" />
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                direction="row"
+                alignItems="center"
+                justifyContent="center"
+                spacing={5}
+              >
+                <Grid item>
+                  <Typography>ATH</Typography>
+                  <Typography>
+                    {getCoinInformation.market_data.ath[currency]}
+                  </Typography>
+                  <Typography>
+                    {getCoinInformation.market_data.ath_change_percentage[
+                      currency
+                    ].toFixed(2) + `%`}
+                  </Typography>
+                  <Typography>
+                    {new Date(
+                      getCoinInformation.market_data.ath_date[currency]
+                    ).toLocaleDateString()}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography>ATL</Typography>
+                  <Typography>
+                    {getCoinInformation.market_data.atl[currency]}
+                  </Typography>
+                  <Typography>
+                    {getCoinInformation.market_data.atl_change_percentage[
+                      currency
+                    ].toFixed(2) + `%`}
+                  </Typography>
+                  <Typography>
+                    {new Date(
+                      getCoinInformation.market_data.atl_date[currency]
+                    ).toLocaleDateString()}
+                  </Typography>
+                </Grid>
+              </Grid>
             </Paper>
           </Grid>
           <Grid item xs={3}>
