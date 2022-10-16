@@ -129,6 +129,8 @@ const NavBar = ({
               <MenuItem value="usd">USD</MenuItem>
               <MenuItem value="eur">EUR</MenuItem>
               <MenuItem value="gbp">GBP</MenuItem>
+              <MenuItem value="btc">BTC</MenuItem>
+              <MenuItem value="eth">ETH</MenuItem>
             </Select>
           </FormControl>
         </Toolbar>

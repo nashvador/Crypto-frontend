@@ -7,9 +7,18 @@ import {
   Typography,
   Avatar,
   Chip,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
-import { ArrowDropDown, ArrowDropUp, Layers } from "@mui/icons-material";
+import {
+  ArrowDropDown,
+  ArrowDropUp,
+  Layers,
+  Circle,
+} from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 
 interface CoinInformationTypes {
@@ -40,7 +49,6 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
   >({});
   const [loading, setLoading] = useState<boolean>(true);
   const id = useParams().id;
-
   const baseURL = `${id}?localization=false&tickers=false&market_data=true&community_data=true&developer_data=false&sparkline=false`;
 
   useEffect(() => {
@@ -59,7 +67,7 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
   const styleArrow = (chartProp: number | undefined): ReactJSXElement => {
     if (chartProp?.toString().includes("-")) {
       return (
-        <div style={{ color: "red" }}>
+        <div style={{ color: "red", width: "1rem" }}>
           <ArrowDropDown fontSize="small" />
           {chartProp.toFixed(2)}
           {"%"}
@@ -67,7 +75,7 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
       );
     } else {
       return (
-        <div style={{ color: "green" }}>
+        <div style={{ color: "green", width: "5rem", display: "flex" }}>
           <ArrowDropUp fontSize="small" />
           {chartProp?.toFixed(2)}
           {"%"}
@@ -75,6 +83,17 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
       );
     }
   };
+
+  function convertToValue(labelValue: number) {
+    // Nine Zeroes for Billions
+    return Math.abs(Number(labelValue)) >= 1.0e9
+      ? (Math.abs(Number(labelValue)) / 1.0e9).toFixed(2) + "B"
+      : Math.abs(Number(labelValue)) >= 1.0e6
+      ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(2) + "M"
+      : Math.abs(Number(labelValue)) >= 1.0e3
+      ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(2) + "K"
+      : Math.abs(Number(labelValue));
+  }
 
   return (
     <Fragment>
@@ -212,20 +231,74 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
                 width: 300,
               }}
             >
-              <Typography>
-                {`Market Cap: ${getCoinInformation.market_data.market_cap[currency]}`}
-                {`Total Volume:
-              ${getCoinInformation.market_data.total_volume[currency]}`}
-                {`Total Supply: ${getCoinInformation.market_data.total_supply}`}
-              </Typography>
+              <List dense={true}>
+                <ListItem alignItems="center">
+                  <ListItemIcon style={{ minWidth: "25px" }}>
+                    <Circle style={{ fontSize: "15px" }} />
+                  </ListItemIcon>
+                  <ListItemText>
+                    {`Market Cap: ${convertToValue(
+                      getCoinInformation.market_data.market_cap[currency]
+                    )}`}
+                  </ListItemText>
+                  {styleArrow(
+                    getCoinInformation.market_data
+                      .market_cap_change_percentage_24h
+                  )}
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon style={{ minWidth: "25px" }}>
+                    <Circle style={{ fontSize: "15px" }} />
+                  </ListItemIcon>
+                  <ListItemText>
+                    {`Total Volume:
+              ${convertToValue(
+                getCoinInformation.market_data.total_volume[currency]
+              )}`}
+                  </ListItemText>
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon style={{ minWidth: "25px" }}>
+                    <Circle style={{ fontSize: "15px" }} />
+                  </ListItemIcon>
+                  <ListItemText>
+                    {`Total Supply: ${convertToValue(
+                      getCoinInformation.market_data.total_supply
+                    )}`}
+                  </ListItemText>
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon style={{ minWidth: "25px" }}>
+                    <Circle style={{ fontSize: "15px" }} />
+                  </ListItemIcon>
+                  <ListItemText>
+                    {`Total Supply: ${convertToValue(
+                      getCoinInformation.market_data.total_supply
+                    )}`}
+                  </ListItemText>
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon style={{ minWidth: "25px" }}>
+                    <Circle style={{ fontSize: "15px" }} />
+                  </ListItemIcon>
+                  <ListItemText>
+                    {`Total Supply: ${convertToValue(
+                      getCoinInformation.market_data.total_supply
+                    )}`}
+                  </ListItemText>
+                </ListItem>
+              </List>
             </Paper>
           </Grid>
           <Grid item xs={9}>
-            <Typography
-              dangerouslySetInnerHTML={{
-                __html: getCoinInformation.description?.en,
-              }}
-            ></Typography>
+            Description:
+            <Paper>
+              <Typography
+                dangerouslySetInnerHTML={{
+                  __html: getCoinInformation.description?.en,
+                }}
+              ></Typography>
+            </Paper>
           </Grid>
         </Grid>
       )}
