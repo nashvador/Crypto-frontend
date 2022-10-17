@@ -60,6 +60,13 @@ const BarChart = ({ currency }: { currency: string }) => {
       legend: {
         display: false,
       },
+      title: {
+        display: true,
+        text: `Bitcoin Daily Volume`,
+        font: {
+          size: 30,
+        },
+      },
     },
     scales: {
       x: {
