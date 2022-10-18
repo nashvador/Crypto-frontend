@@ -7,6 +7,7 @@ import NavBar from "./components/NavBar";
 import SignIn from "./components/UserAuthentication/LogInPage";
 import SignUp from "./components/UserAuthentication/SignUpPage";
 import Portfolio from "./components/Portfolio/Portfolio";
+import { Grid } from "@mui/material";
 
 export interface user {
   token: string;
@@ -27,13 +28,22 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <NavBar
-        currency={currency}
-        setCurrency={setCurrency}
-        user={user}
-        setUser={setUser}
-      />
+    <Grid
+      container
+      spacing={0}
+      direction="row"
+      alignItems="center"
+      justifyContent="center"
+      style={{ minHeight: "100vh" }}
+    >
+      <Grid item xs={9}>
+        <NavBar
+          currency={currency}
+          setCurrency={setCurrency}
+          user={user}
+          setUser={setUser}
+        />
+      </Grid>
       <Routes>
         <Route
           path="/coins/:id"
@@ -51,7 +61,7 @@ function App() {
         />
         <Route path="/signup" element={<SignUp />} />
       </Routes>
-    </div>
+    </Grid>
   );
 }
 

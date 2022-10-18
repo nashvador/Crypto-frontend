@@ -48,6 +48,16 @@ const CryptoTableBody = ({
     }
   };
 
+  function convertToValue(labelValue: number) {
+    return Math.abs(Number(labelValue)) >= 1.0e9
+      ? (Math.abs(Number(labelValue)) / 1.0e9).toFixed(2) + "B"
+      : Math.abs(Number(labelValue)) >= 1.0e6
+      ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(2) + "M"
+      : Math.abs(Number(labelValue)) >= 1.0e3
+      ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(2) + "K"
+      : Math.abs(Number(labelValue));
+  }
+
   return (
     <TableBody>
       {sortedRowInformation(
@@ -60,6 +70,7 @@ const CryptoTableBody = ({
           </TableCell>
           <TableCell align="right">
             <img src={row.coinImage} width="20" height="20"></img>
+            {"  "}
             <Link to={`/coins/${row.id}`} key={row.id}>
               {row.coinName}
               {" ("}
@@ -77,8 +88,8 @@ const CryptoTableBody = ({
           <TableCell align="right" style={styleColor(row.priceChangeOneWeek)}>
             {styleArrow(row.priceChangeOneWeek)}
           </TableCell>
-          <TableCell align="right">{row.dayVolume}</TableCell>
-          <TableCell align="right">{row.MarketCap}</TableCell>
+          <TableCell align="right">{convertToValue(row.dayVolume)}</TableCell>
+          <TableCell align="right">{convertToValue(row.MarketCap)}</TableCell>
           <TableCell align="right">
             <TrendLineChart trendSevenDays={row.sevenDayGraph} />
           </TableCell>

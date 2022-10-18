@@ -48,7 +48,11 @@ const TrendLineChart = ({
       },
     },
   };
-  return <Line data={lineChartSettings} options={options} />;
+  return (
+    <div style={{ height: "100px", width: "235px" }}>
+      <Line data={lineChartSettings} options={options} />
+    </div>
+  );
 };
 
 export default TrendLineChart;

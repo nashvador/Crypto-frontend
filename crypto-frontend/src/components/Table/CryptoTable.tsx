@@ -7,6 +7,7 @@ import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
+import { Grid } from "@mui/material";
 
 interface chartApiData {
   market_cap_rank: number;
@@ -144,7 +145,7 @@ const CryptoTable = ({ currency }: { currency: string }) => {
   };
 
   return (
-    <div>
+    <Grid container>
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <CryptoTableHead
@@ -175,7 +176,7 @@ const CryptoTable = ({ currency }: { currency: string }) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableFooter>
-    </div>
+    </Grid>
   );
 };
 

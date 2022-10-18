@@ -11,6 +11,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import SearchBar from "./PortfolioModalSearch";
 import Box from "@mui/material/Box";
+import { Grid } from "@mui/material";
 import axios from "axios";
 
 export default function PortfolioModal({
@@ -50,7 +51,7 @@ export default function PortfolioModal({
   console.log(amountValue);
 
   return (
-    <div>
+    <Grid container>
       <Button variant="outlined" onClick={handleClickOpen} id="Portfolio-Modal">
         Add a coin to your portfolio
       </Button>
@@ -91,6 +92,6 @@ export default function PortfolioModal({
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Grid>
   );
 }

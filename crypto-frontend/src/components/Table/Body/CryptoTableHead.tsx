@@ -34,7 +34,7 @@ const CryptoTableHead = ({
             }
             onClick={createSortHandler("priceChangeOneHour")}
           >
-            Price Change in 1 Hour
+            1 Hour PC
           </TableSortLabel>
         </TableCell>
         <TableCell align="right" key="priceChangeOneDay">
@@ -45,7 +45,7 @@ const CryptoTableHead = ({
             }
             onClick={createSortHandler("priceChangeOneDay")}
           >
-            Price Change in 1 Day
+            1 Day PC
           </TableSortLabel>
         </TableCell>
         <TableCell align="right" key="priceChangeOneWeek">
@@ -56,7 +56,7 @@ const CryptoTableHead = ({
             }
             onClick={createSortHandler("priceChangeOneWeek")}
           >
-            Price Change in 1 week
+            1 Week PC
           </TableSortLabel>
         </TableCell>
         <TableCell align="right">Total Volume</TableCell>

@@ -3,6 +3,7 @@ import axios from "axios";
 import { user } from "../../App";
 import PortfolioModal from "./portfolioModal";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Grid } from "@mui/material";
 
 const Portfolio = ({
   currency,
@@ -80,12 +81,14 @@ const Portfolio = ({
   };
 
   return (
-    <div>
-      <PortfolioModal config={config} setPortfolio={setPortfolio} />
-      Your Coins
+    <Grid container>
+      <Grid item>
+        <PortfolioModal config={config} setPortfolio={setPortfolio} />
+        Your Coins
+      </Grid>
       {displayArray.map((coinDisplayInfo: any) => {
         return (
-          <div key={coinDisplayInfo.id}>
+          <Grid item key={coinDisplayInfo.id}>
             <img src={coinDisplayInfo.image} />
             {coinDisplayInfo.name} {coinDisplayInfo.symbol.toUpperCase()}{" "}
             {`Date purchased: ${coinDisplayInfo.date}`}
@@ -94,10 +97,10 @@ const Portfolio = ({
               coinDisplayInfo.amountPurchased * coinDisplayInfo.current_price
             }`}
             <DeleteIcon onClick={() => deleteItem(coinDisplayInfo.id)} />
-          </div>
+          </Grid>
         );
       })}
-    </div>
+    </Grid>
   );
 };
 
