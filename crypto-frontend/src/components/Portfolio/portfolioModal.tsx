@@ -52,10 +52,15 @@ export default function PortfolioModal({
 
   return (
     <Grid container>
-      <Button variant="outlined" onClick={handleClickOpen} id="Portfolio-Modal">
-        Add a coin to your portfolio
-      </Button>
-
+      <Grid item>
+        <Button
+          variant="outlined"
+          onClick={handleClickOpen}
+          id="Portfolio-Modal"
+        >
+          Add a coin to your portfolio
+        </Button>
+      </Grid>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add a coin to your portfolio</DialogTitle>
 

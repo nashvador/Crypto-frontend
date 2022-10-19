@@ -58,12 +58,15 @@ const NavBar = ({
   };
 
   return (
-    <Stack spacing={1}>
-      <AppBar
-        position="static"
-        color="default"
-        elevation={0}
-        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
+    <AppBar
+      position="static"
+      color="default"
+      elevation={0}
+      sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
+    >
+      <Stack
+        spacing={1}
+        divider={<Divider orientation="horizontal" flexItem />}
       >
         <Toolbar sx={{ flexWrap: "wrap" }}>
           <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
@@ -105,7 +108,7 @@ const NavBar = ({
             </Button>
           )}
         </Toolbar>
-        <Divider orientation="horizontal" flexItem />
+
         <Toolbar sx={{ flexWrap: "wrap" }}>
           <Typography
             variant="caption"
@@ -134,8 +137,8 @@ const NavBar = ({
             </Select>
           </FormControl>
         </Toolbar>
-      </AppBar>
-    </Stack>
+      </Stack>
+    </AppBar>
   );
 };
 

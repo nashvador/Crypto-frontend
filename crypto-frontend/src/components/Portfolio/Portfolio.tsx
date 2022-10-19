@@ -81,7 +81,14 @@ const Portfolio = ({
   };
 
   return (
-    <Grid container>
+    <Grid
+      container
+      spacing={0}
+      direction="row"
+      alignItems="flex-start"
+      justifyContent="center"
+      style={{ minHeight: "100vh" }}
+    >
       <Grid item>
         <PortfolioModal config={config} setPortfolio={setPortfolio} />
         Your Coins
