@@ -3,6 +3,7 @@ import axios from "axios";
 import { user } from "../../App";
 import PortfolioModal from "./portfolioModal";
 import DeleteIcon from "@mui/icons-material/Delete";
+import provideApiCall from "../../services/api/utilities/provideApiCall";
 import { Grid } from "@mui/material";
 
 const Portfolio = ({
@@ -29,9 +30,10 @@ const Portfolio = ({
 
   useEffect(() => {
     if (user?.token) {
-      callPortfolio("http://localhost:3005/api/portfolio/", config).then(
-        (res) => setPortfolio(res[0].portfolio)
-      );
+      callPortfolio(
+        process.env.REACT_APP_API_ENDPOINT! + `api/portfolio/`,
+        config
+      ).then((res) => setPortfolio(res[0].portfolio));
     }
   }, [user]);
 
@@ -43,17 +45,14 @@ const Portfolio = ({
         .map((personalCoinInfo: any) => personalCoinInfo.coinId)
         .join();
       setCoinString(portfolioStringCombined);
-      const getAll = async (): Promise<object> => {
-        const response = await axios.post(
-          "http://localhost:3005/api/coininfo/",
-          {
-            url: `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&ids=${portfolioStringCombined}&order=market_cap_desc&page=1&sparkline=false&price_change_percentage=1h%2C24h%2C7d`,
-          }
+
+      const getAndSetData = async (): Promise<void> => {
+        const response: any = await provideApiCall.callApiInfo(
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&ids=${portfolioStringCombined}&order=market_cap_desc&page=1&sparkline=false&price_change_percentage=1h%2C24h%2C7d`
         );
         setCoinInfo(response.data);
-        return response;
       };
-      getAll();
+      getAndSetData();
     }
   }, [portfolio]);
 
@@ -72,7 +71,7 @@ const Portfolio = ({
   const deleteItem = async (idCoin: string) => {
     if (portfolio) {
       const response = await axios.delete(
-        `http://localhost:3005/api/portfolio/${idCoin}`,
+        process.env.REACT_APP_API_ENDPOINT! + `api/portfolio/` + idCoin,
         config
       );
       console.log(response.data);

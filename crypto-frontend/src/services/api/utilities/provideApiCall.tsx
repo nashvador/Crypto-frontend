@@ -52,6 +52,5 @@ const getMarketData = async (
 export default {
   getAll,
   getMarketData,
-
   callApiInfo,
 };
