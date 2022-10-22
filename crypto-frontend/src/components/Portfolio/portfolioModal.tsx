@@ -36,7 +36,7 @@ export default function PortfolioModal({
 
   const handleSubmit = async () => {
     const response = await axios.post(
-      "http://localhost:3005/api/portfolio",
+      process.env.REACT_APP_API_ENDPOINT! + `api/portfolio/`,
       { coin: value.id, date: valueDay, amount: amountValue },
       config
     );
