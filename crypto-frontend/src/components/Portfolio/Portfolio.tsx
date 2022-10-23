@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactElement } from "react";
 import axios from "axios";
 import { user } from "../../App";
 import PortfolioModal from "./portfolioModal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import provideApiCall from "../../services/api/utilities/provideApiCall";
 import { Grid, Typography } from "@mui/material";
+import { JsxElement } from "typescript";
 
 const Portfolio = ({
   currency,
@@ -94,20 +95,28 @@ const Portfolio = ({
       <Grid item>
         <Typography fontSize="30px">Your coins</Typography>
       </Grid>
-      {displayArray.map((coinDisplayInfo: any) => {
-        return (
-          <Grid item key={coinDisplayInfo.id}>
-            <img src={coinDisplayInfo.image} />
-            {coinDisplayInfo.name} {coinDisplayInfo.symbol.toUpperCase()}{" "}
-            {`Date purchased: ${coinDisplayInfo.date}`}
-            {`Amount owned: ${coinDisplayInfo.amountPurchased}`}
-            {`Value of owned: ${
-              coinDisplayInfo.amountPurchased * coinDisplayInfo.current_price
-            }`}
-            <DeleteIcon onClick={() => deleteItem(coinDisplayInfo.id)} />
-          </Grid>
-        );
-      })}
+      {user ? (
+        displayArray.map((coinDisplayInfo: any) => {
+          return (
+            <Grid item key={coinDisplayInfo.id}>
+              <img src={coinDisplayInfo.image} />
+              {coinDisplayInfo.name} {coinDisplayInfo.symbol.toUpperCase()}{" "}
+              {`Date purchased: ${coinDisplayInfo.date}`}
+              {`Amount owned: ${coinDisplayInfo.amountPurchased}`}
+              {`Value of owned: ${
+                coinDisplayInfo.amountPurchased * coinDisplayInfo.current_price
+              }`}
+              <DeleteIcon onClick={() => deleteItem(coinDisplayInfo.id)} />
+            </Grid>
+          );
+        })
+      ) : (
+        <Grid item>
+          <Typography fontSize="25px" color="red">
+            You must login to see your coins
+          </Typography>
+        </Grid>
+      )}
     </Grid>
   );
 };
