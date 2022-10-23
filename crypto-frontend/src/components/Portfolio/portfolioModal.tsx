@@ -65,30 +65,46 @@ export default function PortfolioModal({
         <DialogTitle>Add a coin to your portfolio</DialogTitle>
 
         <DialogContent>
-          <Box>{value ? <img src={value.large} /> : ""} </Box>
-          <TextField
-            id="Amount-Purchased"
-            name="amount"
-            label="Number"
-            type="number"
-            onChange={(e) => setAmountValue(Number(e.target.value))}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label="Date Purchased"
-              value={valueDay}
-              onChange={(newValue) => {
-                setValueDay(newValue);
-              }}
-              renderInput={(params) => (
-                <TextField {...params} name="date" id="Date-Purchased" />
-              )}
-            />
-          </LocalizationProvider>
-          <SearchBar value={value} setValue={setValue} />
+          <Grid
+            container
+            spacing={2}
+            direction="column"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Grid item>
+              <Box>{value ? <img src={value.large} /> : ""} </Box>
+            </Grid>
+            <Grid item>
+              <SearchBar value={value} setValue={setValue} />
+            </Grid>
+            <Grid item>
+              <TextField
+                id="Amount-Purchased"
+                name="amount"
+                label="Number"
+                type="number"
+                onChange={(e) => setAmountValue(Number(e.target.value))}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+            <Grid item>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Date Purchased"
+                  value={valueDay}
+                  onChange={(newValue) => {
+                    setValueDay(newValue);
+                  }}
+                  renderInput={(params) => (
+                    <TextField {...params} name="date" id="Date-Purchased" />
+                  )}
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel Coin Purchase</Button>

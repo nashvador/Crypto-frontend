@@ -4,7 +4,7 @@ import { user } from "../../App";
 import PortfolioModal from "./portfolioModal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import provideApiCall from "../../services/api/utilities/provideApiCall";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
 const Portfolio = ({
   currency,
@@ -82,15 +82,17 @@ const Portfolio = ({
   return (
     <Grid
       container
-      spacing={0}
-      direction="row"
-      alignItems="flex-start"
-      justifyContent="center"
+      spacing={2}
+      direction="column"
+      alignItems="center"
+      justifyContent="flex-start"
       style={{ minHeight: "100vh" }}
     >
       <Grid item>
         <PortfolioModal config={config} setPortfolio={setPortfolio} />
-        Your Coins
+      </Grid>
+      <Grid item>
+        <Typography fontSize="30px">Your coins</Typography>
       </Grid>
       {displayArray.map((coinDisplayInfo: any) => {
         return (
