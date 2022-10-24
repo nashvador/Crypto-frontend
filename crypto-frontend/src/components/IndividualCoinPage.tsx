@@ -67,7 +67,7 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
   const styleArrow = (chartProp: number | undefined): ReactJSXElement => {
     if (chartProp?.toString().includes("-")) {
       return (
-        <div style={{ color: "red", width: "1rem" }}>
+        <div style={{ color: "red", width: "5rem" }}>
           <ArrowDropDown fontSize="small" />
           {chartProp.toFixed(2)}
           {"%"}
@@ -109,16 +109,18 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
   return (
     <Fragment>
       {loading ? (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "100vh",
-          }}
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          spacing={0}
+          style={{ minHeight: "100vh" }}
         >
-          <CircularProgress size="10rem" />
-        </div>
+          <Grid item>
+            <CircularProgress size="5rem" />
+          </Grid>
+        </Grid>
       ) : (
         <Grid
           container
@@ -194,45 +196,45 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
                 <Grid item>
                   <Layers fontSize="large" />
                 </Grid>
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                alignItems="center"
-                justifyContent="center"
-                spacing={5}
-              >
-                <Grid item>
-                  <Typography>ATH</Typography>
-                  <Typography>
-                    {getCoinInformation.market_data.ath[currency]}
-                  </Typography>
-                  <Typography>
-                    {getCoinInformation.market_data.ath_change_percentage[
-                      currency
-                    ].toFixed(2) + `%`}
-                  </Typography>
-                  <Typography>
-                    {new Date(
-                      getCoinInformation.market_data.ath_date[currency]
-                    ).toLocaleDateString()}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography>ATL</Typography>
-                  <Typography>
-                    {getCoinInformation.market_data.atl[currency]}
-                  </Typography>
-                  <Typography>
-                    {getCoinInformation.market_data.atl_change_percentage[
-                      currency
-                    ].toFixed(2) + `%`}
-                  </Typography>
-                  <Typography>
-                    {new Date(
-                      getCoinInformation.market_data.atl_date[currency]
-                    ).toLocaleDateString()}
-                  </Typography>
+                <Grid
+                  container
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="center"
+                  spacing={5}
+                >
+                  <Grid item>
+                    <Typography>ATH:</Typography>
+                    <Typography>
+                      {getCoinInformation.market_data.ath[currency]}
+                    </Typography>
+                    <Typography>
+                      {getCoinInformation.market_data.ath_change_percentage[
+                        currency
+                      ].toFixed(2) + `%`}
+                    </Typography>
+                    <Typography>
+                      {new Date(
+                        getCoinInformation.market_data.ath_date[currency]
+                      ).toLocaleDateString()}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography>ATL:</Typography>
+                    <Typography>
+                      {getCoinInformation.market_data.atl[currency]}
+                    </Typography>
+                    <Typography>
+                      {getCoinInformation.market_data.atl_change_percentage[
+                        currency
+                      ].toFixed(2) + `%`}
+                    </Typography>
+                    <Typography>
+                      {new Date(
+                        getCoinInformation.market_data.atl_date[currency]
+                      ).toLocaleDateString()}
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Grid>
             </Paper>
@@ -285,8 +287,8 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
                     <Circle style={{ fontSize: "15px" }} />
                   </ListItemIcon>
                   <ListItemText>
-                    {`Total Supply: ${convertToValue(
-                      getCoinInformation.market_data.total_supply
+                    {`Circulating Supply: ${convertToValue(
+                      getCoinInformation.market_data.circulating_supply
                     )}`}
                   </ListItemText>
                 </ListItem>
@@ -295,9 +297,13 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
                     <Circle style={{ fontSize: "15px" }} />
                   </ListItemIcon>
                   <ListItemText>
-                    {`Total Supply: ${convertToValue(
-                      getCoinInformation.market_data.total_supply
-                    )}`}
+                    {`Max Supply: ${
+                      getCoinInformation.market_data.max_supply
+                        ? convertToValue(
+                            getCoinInformation.market_data.max_supply
+                          )
+                        : "-"
+                    }`}
                   </ListItemText>
                 </ListItem>
               </List>
