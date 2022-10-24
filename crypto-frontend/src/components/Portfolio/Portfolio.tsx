@@ -99,14 +99,45 @@ const Portfolio = ({
         displayArray.map((coinDisplayInfo: any) => {
           return (
             <Grid item key={coinDisplayInfo.id}>
-              <img src={coinDisplayInfo.image} />
-              {coinDisplayInfo.name} {coinDisplayInfo.symbol.toUpperCase()}{" "}
-              {`Date purchased: ${coinDisplayInfo.date}`}
-              {`Amount owned: ${coinDisplayInfo.amountPurchased}`}
-              {`Value of owned: ${
-                coinDisplayInfo.amountPurchased * coinDisplayInfo.current_price
-              }`}
-              <DeleteIcon onClick={() => deleteItem(coinDisplayInfo.id)} />
+              <Grid
+                container
+                spacing={2}
+                direction="column"
+                alignItems="center"
+                justifyContent="flex-start"
+              >
+                <Grid item>
+                  <img src={coinDisplayInfo.image} />
+                </Grid>
+                <Grid item>
+                  {coinDisplayInfo.name}{" "}
+                  {`(${coinDisplayInfo.symbol.toUpperCase()})`}
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                spacing={2}
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Grid item>{`Date purchased: ${new Date(
+                  coinDisplayInfo.date
+                ).toDateString()}`}</Grid>
+
+                <Grid item>
+                  {`Amount owned: ${coinDisplayInfo.amountPurchased}`}
+                </Grid>
+                <Grid item>
+                  {`Value of owned: ${
+                    coinDisplayInfo.amountPurchased *
+                    coinDisplayInfo.current_price
+                  }`}
+                </Grid>
+                <Grid item>
+                  <DeleteIcon onClick={() => deleteItem(coinDisplayInfo.id)} />
+                </Grid>
+              </Grid>
             </Grid>
           );
         })
