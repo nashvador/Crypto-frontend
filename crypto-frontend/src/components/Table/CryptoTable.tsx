@@ -162,6 +162,7 @@ const CryptoTable = ({ currency }: { currency: string }) => {
               rows={rows}
               getComparator={getComparator}
               sortedRowInformation={sortedRowInformation}
+              currency={currency}
             />
           )}
         </Table>

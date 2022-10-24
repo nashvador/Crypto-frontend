@@ -94,6 +94,18 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
       : Math.abs(Number(labelValue));
   }
 
+  const currencySymbolDisplay = (): string => {
+    if (currency === "usd") {
+      return "$";
+    } else if (currency === "eur") {
+      return "€";
+    } else if (currency === "gbp") {
+      return "£";
+    } else if (currency === "btc") {
+      return "₿";
+    } else return "Ξ";
+  };
+
   return (
     <Fragment>
       {loading ? (
@@ -116,7 +128,7 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
           spacing={1}
           style={{ minHeight: "100vh" }}
         >
-          <Grid item xs={3}>
+          <Grid item>
             <Paper
               sx={{
                 height: 200,
@@ -153,7 +165,7 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
               </Grid>
             </Paper>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item>
             <Paper
               sx={{
                 height: 200,
@@ -169,7 +181,9 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
               >
                 <Grid item>
                   <Typography>
-                    {getCoinInformation.market_data?.current_price[currency]}
+                    {`${currencySymbolDisplay()}${
+                      getCoinInformation.market_data?.current_price[currency]
+                    }`}
                   </Typography>
                 </Grid>
                 <Grid item>
@@ -223,7 +237,7 @@ const IndividualCoinPage = ({ currency }: { currency: string }) => {
               </Grid>
             </Paper>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item>
             <Paper
               sx={{
                 height: 200,

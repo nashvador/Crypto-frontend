@@ -13,12 +13,14 @@ const CryptoTableBody = ({
   rows,
   getComparator,
   sortedRowInformation,
+  currency,
 }: {
   valueToOrderBy: string;
   orderDirection: "asc" | "desc";
   rows: Array<object>;
   getComparator: (order: "asc" | "desc", orderBy: string) => any;
   sortedRowInformation: (rowArray: Array<object>, comparator: any) => any;
+  currency: string;
 }) => {
   const styleColor = (chartProp: number): object => {
     if (chartProp.toString().includes("-")) {
@@ -58,6 +60,18 @@ const CryptoTableBody = ({
       : Math.abs(Number(labelValue));
   }
 
+  const currencySymbolDisplay = (): string => {
+    if (currency === "usd") {
+      return "$";
+    } else if (currency === "eur") {
+      return "€";
+    } else if (currency === "gbp") {
+      return "£";
+    } else if (currency === "btc") {
+      return "₿";
+    } else return "Ξ";
+  };
+
   return (
     <TableBody>
       {sortedRowInformation(
@@ -78,7 +92,9 @@ const CryptoTableBody = ({
               {")"}
             </Link>
           </TableCell>
-          <TableCell align="right">{row.price}</TableCell>
+          <TableCell align="right">{`${currencySymbolDisplay()}${
+            row.price
+          }`}</TableCell>
           <TableCell align="right" style={styleColor(row.priceChangeOneHour)}>
             {styleArrow(row.priceChangeOneHour)}
           </TableCell>
