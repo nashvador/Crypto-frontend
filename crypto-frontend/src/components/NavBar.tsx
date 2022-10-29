@@ -46,8 +46,6 @@ const NavBar = ({
     getAndSetData();
   }, []);
 
-  console.log(getGlobalApiInfo.data);
-
   const handleChange = (event: SelectChangeEvent) => {
     setCurrency(event.target.value as string);
   };
