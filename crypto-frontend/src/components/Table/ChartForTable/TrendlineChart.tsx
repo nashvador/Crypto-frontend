@@ -49,7 +49,7 @@ const TrendLineChart = ({
     },
   };
   return (
-    <div style={{ height: "100px", width: "235px" }}>
+    <div style={{ height: "100px", width: "220px" }}>
       <Line data={lineChartSettings} options={options} />
     </div>
   );

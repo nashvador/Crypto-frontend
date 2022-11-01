@@ -27,8 +27,6 @@ const Portfolio = ({
     return response.data;
   };
 
-  console.log(user);
-
   useEffect(() => {
     if (user?.token) {
       callPortfolio(
@@ -37,8 +35,6 @@ const Portfolio = ({
       ).then((res) => setPortfolio(res[0].portfolio));
     }
   }, [user]);
-
-  console.log(portfolio);
 
   useEffect(() => {
     if (portfolio) {

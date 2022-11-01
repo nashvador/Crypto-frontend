@@ -26,7 +26,7 @@ function Copyright(props: any) {
       align="center"
       {...props}
     >
-      {"Copyright © CoinNow"}
+      {"Copyright © CoinNow "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -67,6 +67,7 @@ export default function SignUp() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              justifyContent: "center",
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -81,7 +82,7 @@ export default function SignUp() {
               onSubmit={handleSubmit}
               sx={{ mt: 3 }}
             >
-              <Grid container spacing={2}>
+              <Grid container>
                 <Grid item xs={12}>
                   <TextField
                     autoComplete="Name"
@@ -94,7 +95,7 @@ export default function SignUp() {
                   />
                 </Grid>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sx={{ marginTop: 2 }}>
                 <TextField
                   required
                   fullWidth
@@ -104,7 +105,7 @@ export default function SignUp() {
                   autoComplete="username"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sx={{ marginTop: 2 }}>
                 <TextField
                   required
                   fullWidth

@@ -48,8 +48,6 @@ export default function PortfolioModal({
     handleClose();
   };
 
-  console.log(amountValue);
-
   return (
     <Grid container>
       <Grid item>
