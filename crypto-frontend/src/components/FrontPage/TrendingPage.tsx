@@ -26,8 +26,6 @@ const TrendingPage = () => {
     getAndSetData();
   }, []);
 
-  console.log(trendingData);
-
   return (
     <List
       sx={{
